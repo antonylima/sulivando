@@ -1,23 +1,22 @@
 import type { SiteConfig, SiteContent } from "../types";
 
 export const SITE_CONFIG: SiteConfig = {
-  title: "Alejandro Múnez — Mobile & Web Developer",
-  author: "Alejandro Múnez Cuntez",
+  title: "Sulivando Lima — Mobile & Web Developer",
+  author: "Sulivando Lima",
   description:
-    "Software Engineer based in San Francisco, USA. I specialize in UI design, web and mobile application development and maintenance.",
+    "Software Developer specialize in web and mobile application development and maintenance.",
   lang: "en",
-  siteLogo: "/alejandro-small.jpg",
+  siteLogo: "/sulivando-small.jpg",
   navLinks: [
     { text: "Experience", href: "#experience" },
     { text: "Projects", href: "#projects" },
     { text: "About", href: "#about" },
   ],
   socialLinks: [
-    { text: "Twitter", href: "https://github.com/immois/astro-zen" },
-    { text: "LinkedIn", href: "https://github.com/immois/astro-zen" },
-    { text: "Github", href: "https://github.com/immois/astro-zen" },
-    { text: "Youtube", href: "https://github.com/immois/astro-zen" },
-    { text: "Dribbble", href: "https://github.com/immois/astro-zen" },
+    { text: "LinkedIn", href: "https://www.linkedin.com/in/sulivando/" },
+    { text: "Github", href: "https://github.com/antonylima" },
+    { text: "Instagran", href: "https://www.instagram.com/vandolima100" },
+    { text: "Whatsapp", href: "https://wa.me/5585987836810" }
   ],
   socialImage: "/zen-og.png",
   canonicalURL: "https://astro-zen.vercel.app",
@@ -25,11 +24,11 @@ export const SITE_CONFIG: SiteConfig = {
 
 export const SITE_CONTENT: SiteContent = {
   hero: {
-    name: "Alejandro Múnez",
+    name: "Sulivando Lima",
     specialty: "Mobile & Web Developer",
     summary:
-      "Developer based in San Francisco, USA. I specialize in UI design, web and mobile application development and maintenance.",
-    email: "example@email.com",
+      "Software Developer specialize in web and mobile application development and maintenance.",
+    email: "ascldeveloper@gmail.com",
   },
   experience: [
     {
@@ -87,11 +86,11 @@ export const SITE_CONTENT: SiteContent = {
   ],
   about: {
     description: `
-      Hi, I’m Alejandro Múnez, a passionate Mobile and Web Developer with a knack for crafting seamless digital experiences. With a strong background in both Android and iOS development, as well as front-end web technologies, I thrive in the intersection where creativity meets technology.
+      Hi, I’m Sulivando Lima, a passionate Mobile and Web Developer with a knack for crafting seamless digital experiences. With a strong background in both Android and iOS development, as well as front-end web technologies, I thrive in the intersection where creativity meets technology.
 
       Over the years, I’ve honed my skills in building robust, user-friendly applications that not only meet the needs of users but also push the boundaries of what’s possible. My projects range from innovative mobile applications to responsive web designs, all with a focus on performance, security, and scalability.
     `,
-    image: "/alejandro-big.jpg",
+    image: "/sulivando-big.jpg",
   },
 };
 
