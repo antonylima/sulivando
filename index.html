@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Alex Chen - Full Stack Developer</title>
+    <title>Sulivando - Full Stack Developer</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/index.min.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
         
@@ -13,19 +14,37 @@
             font-family: 'Inter', sans-serif;
         }
         
-        .gradient-text {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+        /* Accent color (renamed to .accent) - vibrant green */
+        .accent {
+            color: #2ecc71; /* vibrant green */
         }
         
+        /* removed old gradient-text in favor of .accent (flat elegant color) */
+
+        /* Solid, deep hero background for contrast */
         .hero-bg {
-            background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+            background: #050505;
+        }
+
+        /* Primary CTA: vibrant green */
+        .btn-subtle {
+            background: #2ecc71;
+            color: #fff;
+        }
+
+        .btn-subtle:hover {
+            background: #27ae60;
+        }
+
+        /* Skill bar: vibrant green */
+        .skill-bar {
+            transition: width 2s ease-in-out;
+            background: #2ecc71;
         }
         
         .glass-effect {
             background: rgba(255, 255, 255, 0.05);
+            -webkit-backdrop-filter: blur(10px);
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
@@ -73,7 +92,7 @@
             left: 0;
             width: 0;
             height: 2px;
-            background: #667eea;
+            background: #2ecc71;
             transition: width 0.3s ease;
         }
         
@@ -98,12 +117,12 @@
         }
         
         ::-webkit-scrollbar-thumb {
-            background: #667eea;
+            background: #2ecc71;
             border-radius: 5px;
         }
-        
+
         ::-webkit-scrollbar-thumb:hover {
-            background: #764ba2;
+            background: #27ae60;
         }
     </style>
 </head>
@@ -111,7 +130,7 @@
     <!-- Navigation -->
     <nav class="fixed top-0 w-full glass-effect z-50 px-6 py-4">
         <div class="max-w-7xl mx-auto flex justify-between items-center">
-            <div class="text-2xl font-bold gradient-text">AC</div>
+            <div class="text-2xl font-bold gradient-text">S</div>
             <div class="hidden md:flex space-x-8">
                 <a href="#home" class="nav-link">Home</a>
                 <a href="#about" class="nav-link">About</a>
@@ -119,7 +138,7 @@
                 <a href="#projects" class="nav-link">Projects</a>
                 <a href="#contact" class="nav-link">Contact</a>
             </div>
-            <button id="mobile-menu-btn" class="md:hidden">
+            <button id="mobile-menu-btn" class="md:hidden" aria-controls="mobile-menu" aria-expanded="false" aria-label="Open menu">
                 <i class="fas fa-bars text-2xl"></i>
             </button>
         </div>
@@ -139,24 +158,23 @@
     <!-- Hero Section -->
     <section id="home" class="hero-bg min-h-screen flex items-center justify-center relative">
         <div class="absolute inset-0 overflow-hidden">
-            <div class="absolute top-20 left-10 w-72 h-72 bg-purple-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 float-animation"></div>
-            <div class="absolute bottom-20 right-10 w-72 h-72 bg-blue-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 float-animation" style="animation-delay: 2s;"></div>
+            <div class="absolute top-20 left-10 w-72 h-72 bg-gray-800 rounded-full mix-blend-multiply filter blur-xl opacity-8 float-animation"></div>
+            <div class="absolute bottom-20 right-10 w-72 h-72 bg-gray-800 rounded-full mix-blend-multiply filter blur-xl opacity-8 float-animation" data-anim-delay="2s"></div>
         </div>
         
         <div class="max-w-7xl mx-auto px-6 relative z-10">
             <div class="text-center">
                 <h1 class="text-5xl md:text-7xl font-bold mb-6">
-                    Hi, I'm <span class="gradient-text">Alex Chen</span>
+                    Hi, I'm <span class="accent">Sulivando</span>
                 </h1>
                 <div class="text-2xl md:text-4xl mb-8 h-12">
                     <span id="typing-text" class="typing-cursor"></span>
                 </div>
                 <p class="text-xl text-gray-300 mb-12 max-w-2xl mx-auto">
-                    Passionate about creating innovative digital solutions that make a difference. 
-                    I transform ideas into reality through clean, efficient code.
+                    I build web & game experiences that delight users — clean, fast, and beautiful.
                 </p>
-                <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                    <a href="#projects" class="px-8 py-4 bg-gradient-to-r from-purple-600 to-blue-600 rounded-full font-semibold hover:scale-105 transition-transform">
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <a href="#projects" class="px-8 py-4 btn-subtle rounded-full font-semibold hover:scale-105 transition-transform">
                         View My Work
                     </a>
                     <a href="#contact" class="px-8 py-4 glass-effect rounded-full font-semibold hover:scale-105 transition-transform">
@@ -174,41 +192,37 @@
     <!-- About Section -->
     <section id="about" class="py-20 px-6">
         <div class="max-w-7xl mx-auto">
-            <h2 class="text-4xl md:text-5xl font-bold text-center mb-16">
-                About <span class="gradient-text">Me</span>
+                <h2 class="text-4xl md:text-5xl font-bold text-center mb-16">
+                About <span class="accent">Me</span>
             </h2>
             
             <div class="grid md:grid-cols-2 gap-12 items-center">
                 <div class="relative">
-                    <div class="absolute inset-0 bg-gradient-to-r from-purple-600 to-blue-600 rounded-full blur-2xl opacity-30"></div>
-                    <img src="https://picsum.photos/seed/developer/400/400" alt="Alex Chen" 
+                    <div class="absolute inset-0 bg-green-900 rounded-full blur-2xl opacity-20"></div>
+                    <img src="https://picsum.photos/seed/developer/400/400" alt="Sulivando" 
                          class="relative rounded-full w-80 h-80 mx-auto object-cover border-4 border-gray-800">
                 </div>
                 
                 <div>
                     <h3 class="text-2xl font-semibold mb-4">Full Stack Developer & Creative Thinker</h3>
                     <p class="text-gray-300 mb-6">
-                        I'm a passionate developer with a love for creating beautiful, functional web applications. 
-                        My journey in tech started with curiosity and has evolved into a career dedicated to 
-                        building solutions that matter.
+                        I'm Sulivando — a Full Stack developer focused on web apps and games. I combine design sense with engineering to ship polished products.
                     </p>
                     <p class="text-gray-300 mb-6">
-                        I believe in the power of technology to transform lives and businesses. Every line of code 
-                        I write is an opportunity to make a positive impact. When I'm not coding, you'll find me 
-                        exploring new technologies, contributing to open source, or sharing knowledge with the community.
+                        I believe technology can transform experiences. I enjoy building performant, well-designed applications and contributing to open source.
                     </p>
                     
                     <div class="grid grid-cols-3 gap-4 text-center">
                         <div class="glass-effect p-4 rounded-lg">
-                            <div class="text-3xl font-bold gradient-text">50+</div>
+                            <div class="text-3xl font-bold accent">50+</div>
                             <div class="text-sm text-gray-400">Projects</div>
                         </div>
                         <div class="glass-effect p-4 rounded-lg">
-                            <div class="text-3xl font-bold gradient-text">2+</div>
+                            <div class="text-3xl font-bold accent">2+</div>
                             <div class="text-sm text-gray-400">Years Exp</div>
                         </div>
                         <div class="glass-effect p-4 rounded-lg">
-                            <div class="text-3xl font-bold gradient-text">100%</div>
+                            <div class="text-3xl font-bold accent">100%</div>
                             <div class="text-sm text-gray-400">Dedicated</div>
                         </div>
                     </div>
@@ -221,8 +235,8 @@
     <section id="skills" class="py-20 px-6 bg-gray-800">
         <div class="max-w-7xl mx-auto">
             <h2 class="text-4xl md:text-5xl font-bold text-center mb-16">
-                My <span class="gradient-text">Skills</span>
-            </h2>
+                    My <span class="gradient-text">Skills</span>
+                </h2>
             
             <div class="grid md:grid-cols-2 gap-12">
                 <div>
@@ -235,8 +249,8 @@
                                 <span>90%</span>
                             </div>
                             <div class="w-full bg-gray-700 rounded-full h-3">
-                                <div class="skill-bar bg-gradient-to-r from-purple-600 to-blue-600 h-3 rounded-full" 
-                                     data-width="90%"></div>
+                                             <div class="skill-bar h-3 rounded-full" 
+                                                 data-width="90%"></div>
                             </div>
                         </div>
                         
@@ -246,8 +260,8 @@
                                 <span>85%</span>
                             </div>
                             <div class="w-full bg-gray-700 rounded-full h-3">
-                                <div class="skill-bar bg-gradient-to-r from-purple-600 to-blue-600 h-3 rounded-full" 
-                                     data-width="85%"></div>
+                                             <div class="skill-bar h-3 rounded-full" 
+                                                 data-width="85%"></div>
                             </div>
                         </div>
                         
@@ -257,8 +271,8 @@
                                 <span>80%</span>
                             </div>
                             <div class="w-full bg-gray-700 rounded-full h-3">
-                                <div class="skill-bar bg-gradient-to-r from-purple-600 to-blue-600 h-3 rounded-full" 
-                                     data-width="80%"></div>
+                                             <div class="skill-bar h-3 rounded-full" 
+                                                 data-width="80%"></div>
                             </div>
                         </div>
                         
@@ -268,8 +282,8 @@
                                 <span>75%</span>
                             </div>
                             <div class="w-full bg-gray-700 rounded-full h-3">
-                                <div class="skill-bar bg-gradient-to-r from-purple-600 to-blue-600 h-3 rounded-full" 
-                                     data-width="75%"></div>
+                                             <div class="skill-bar h-3 rounded-full" 
+                                                 data-width="75%"></div>
                             </div>
                         </div>
                         
@@ -279,8 +293,8 @@
                                 <span>70%</span>
                             </div>
                             <div class="w-full bg-gray-700 rounded-full h-3">
-                                <div class="skill-bar bg-gradient-to-r from-purple-600 to-blue-600 h-3 rounded-full" 
-                                     data-width="70%"></div>
+                                             <div class="skill-bar h-3 rounded-full" 
+                                                 data-width="70%"></div>
                             </div>
                         </div>
                     </div>
@@ -303,7 +317,7 @@
                             <p class="text-sm">Python</p>
                         </div>
                         <div class="tech-icon text-center">
-                            <i class="fab fa-git-alt text-4xl mb-2 text-orange-400"></i>
+                            <i class="fab fa-git-alt text-4xl mb-2 text-gray-300"></i>
                             <p class="text-sm">Git</p>
                         </div>
                         <div class="tech-icon text-center">
@@ -315,24 +329,24 @@
                             <p class="text-sm">MongoDB</p>
                         </div>
                         <div class="tech-icon text-center">
-                            <i class="fab fa-aws text-4xl mb-2 text-orange-500"></i>
+                            <i class="fab fa-aws text-4xl mb-2 text-gray-300"></i>
                             <p class="text-sm">AWS</p>
                         </div>
                         <div class="tech-icon text-center">
-                            <i class="fab fa-figma text-4xl mb-2 text-purple-400"></i>
+                            <i class="fab fa-figma text-4xl mb-2 text-gray-300"></i>
                             <p class="text-sm">Figma</p>
                         </div>
                     </div>
                     
                     <div class="mt-8 glass-effect p-6 rounded-lg">
-                        <h4 class="font-semibold mb-3">Currently Learning</h4>
-                        <div class="flex flex-wrap gap-2">
-                            <span class="px-3 py-1 bg-purple-600 rounded-full text-sm">GraphQL</span>
-                            <span class="px-3 py-1 bg-blue-600 rounded-full text-sm">Web3</span>
-                            <span class="px-3 py-1 bg-green-600 rounded-full text-sm">Machine Learning</span>
-                            <span class="px-3 py-1 bg-orange-600 rounded-full text-sm">Rust</span>
+                            <h4 class="font-semibold mb-3">Currently Learning</h4>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-3 py-1 bg-gray-700 rounded-full text-sm text-gray-100">GraphQL</span>
+                                <span class="px-3 py-1 bg-gray-700 rounded-full text-sm text-gray-100">Web3</span>
+                                <span class="px-3 py-1 bg-gray-700 rounded-full text-sm text-gray-100">Machine Learning</span>
+                                <span class="px-3 py-1 bg-gray-700 rounded-full text-sm text-gray-100">Rust</span>
+                            </div>
                         </div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -356,15 +370,15 @@
                             A full-stack e-commerce solution with real-time inventory management and secure payment processing.
                         </p>
                         <div class="flex flex-wrap gap-2 mb-4">
-                            <span class="px-2 py-1 bg-purple-600 rounded text-xs">React</span>
-                            <span class="px-2 py-1 bg-blue-600 rounded text-xs">Node.js</span>
-                            <span class="px-2 py-1 bg-green-600 rounded text-xs">MongoDB</span>
+                            <span class="px-2 py-1 bg-gray-700 rounded text-xs text-gray-100">React</span>
+                            <span class="px-2 py-1 bg-gray-700 rounded text-xs text-gray-100">Node.js</span>
+                            <span class="px-2 py-1 bg-gray-700 rounded text-xs text-gray-100">MongoDB</span>
                         </div>
                         <div class="flex gap-4">
-                            <a href="#" class="text-purple-400 hover:text-purple-300">
+                            <a href="projects/ecommerce.html" title="Live demo — E-Commerce Platform" class="gradient-text" target="_blank" rel="noopener noreferrer">
                                 <i class="fas fa-external-link-alt"></i> Live Demo
                             </a>
-                            <a href="#" class="text-purple-400 hover:text-purple-300">
+                            <a href="https://github.com/antonylima/ecommerce-platform" title="Source code — E-Commerce Platform" class="gradient-text" target="_blank" rel="noopener noreferrer">
                                 <i class="fab fa-github"></i> Code
                             </a>
                         </div>
@@ -381,15 +395,15 @@
                             Collaborative task management tool with real-time updates and team analytics dashboard.
                         </p>
                         <div class="flex flex-wrap gap-2 mb-4">
-                            <span class="px-2 py-1 bg-purple-600 rounded text-xs">Next.js</span>
-                            <span class="px-2 py-1 bg-blue-600 rounded text-xs">TypeScript</span>
-                            <span class="px-2 py-1 bg-orange-600 rounded text-xs">Firebase</span>
+                            <span class="px-2 py-1 bg-gray-700 rounded text-xs text-gray-100">Next.js</span>
+                            <span class="px-2 py-1 bg-gray-700 rounded text-xs text-gray-100">TypeScript</span>
+                            <span class="px-2 py-1 bg-gray-700 rounded text-xs text-gray-100">Firebase</span>
                         </div>
                         <div class="flex gap-4">
-                            <a href="#" class="text-purple-400 hover:text-purple-300">
+                            <a href="projects/task-manager.html" title="Live demo — Task Management App" class="gradient-text" target="_blank" rel="noopener noreferrer">
                                 <i class="fas fa-external-link-alt"></i> Live Demo
                             </a>
-                            <a href="#" class="text-purple-400 hover:text-purple-300">
+                            <a href="https://github.com/antonylima/task-manager" title="Source code — Task Management App" class="gradient-text" target="_blank" rel="noopener noreferrer">
                                 <i class="fab fa-github"></i> Code
                             </a>
                         </div>
@@ -406,15 +420,15 @@
                             Interactive weather application with location-based forecasts and beautiful data visualizations.
                         </p>
                         <div class="flex flex-wrap gap-2 mb-4">
-                            <span class="px-2 py-1 bg-purple-600 rounded text-xs">Vue.js</span>
-                            <span class="px-2 py-1 bg-blue-600 rounded text-xs">Chart.js</span>
-                            <span class="px-2 py-1 bg-green-600 rounded text-xs">API</span>
+                            <span class="px-2 py-1 bg-gray-700 rounded text-xs text-gray-100">Vue.js</span>
+                            <span class="px-2 py-1 bg-gray-700 rounded text-xs text-gray-100">Chart.js</span>
+                            <span class="px-2 py-1 bg-gray-700 rounded text-xs text-gray-100">API</span>
                         </div>
                         <div class="flex gap-4">
-                            <a href="#" class="text-purple-400 hover:text-purple-300">
+                            <a href="projects/weather-dashboard.html" title="Live demo — Weather Dashboard" class="gradient-text" target="_blank" rel="noopener noreferrer">
                                 <i class="fas fa-external-link-alt"></i> Live Demo
                             </a>
-                            <a href="#" class="text-purple-400 hover:text-purple-300">
+                            <a href="https://github.com/antonylima/weather-dashboard" title="Source code — Weather Dashboard" class="gradient-text" target="_blank" rel="noopener noreferrer">
                                 <i class="fab fa-github"></i> Code
                             </a>
                         </div>
@@ -423,7 +437,7 @@
             </div>
             
             <div class="text-center mt-12">
-                <a href="#" class="inline-flex items-center gap-2 text-purple-400 hover:text-purple-300">
+                <a href="projects/index.html" title="All projects" class="inline-flex items-center gap-2 gradient-text hover:text-yellow-400">
                     View All Projects <i class="fas fa-arrow-right"></i>
                 </a>
             </div>
@@ -445,32 +459,32 @@
                         Whether you have a question or just want to say hi, feel free to reach out!
                     </p>
                     
-                    <div class="space-y-4">
+                        <div class="space-y-4">
                         <div class="flex items-center gap-4">
-                            <i class="fas fa-envelope text-purple-400 text-xl"></i>
-                            <span>alex.chen@email.com</span>
+                            <i class="fas fa-envelope text-green-400 text-xl"></i>
+                            <span>sulivando.yahoo.com.br</span>
                         </div>
                         <div class="flex items-center gap-4">
-                            <i class="fas fa-phone text-purple-400 text-xl"></i>
-                            <span>+1 (555) 123-4567</span>
+                            <i class="fas fa-phone text-green-400 text-xl"></i>
+                            <span>+55 (85) 98783-6810</span>
                         </div>
                         <div class="flex items-center gap-4">
-                            <i class="fas fa-map-marker-alt text-purple-400 text-xl"></i>
-                            <span>San Francisco, CA</span>
+                            <i class="fas fa-map-marker-alt text-green-400 text-xl"></i>
+                            <span>Fortaleza, CE</span>
                         </div>
                     </div>
                     
-                    <div class="flex gap-4 mt-8">
-                        <a href="#" class="w-12 h-12 glass-effect rounded-full flex items-center justify-center hover:bg-purple-600 transition-colors">
-                            <i class="fab fa-github"></i>
-                        </a>
-                        <a href="#" class="w-12 h-12 glass-effect rounded-full flex items-center justify-center hover:bg-blue-600 transition-colors">
+                                    <div class="flex gap-4 mt-8">
+                                    <a href="https://github.com/antonylima" class="w-12 h-12 glass-effect rounded-full flex items-center justify-center hover:bg-gray-700 transition-colors" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+                                        <i class="fab fa-github"></i>
+                                    </a>
+                                    <a href="https://www.linkedin.com/in/antonylima" title="LinkedIn" class="w-12 h-12 glass-effect rounded-full flex items-center justify-center hover:bg-gray-700 transition-colors" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer">
                             <i class="fab fa-linkedin"></i>
                         </a>
-                        <a href="#" class="w-12 h-12 glass-effect rounded-full flex items-center justify-center hover:bg-blue-400 transition-colors">
+                                    <a href="https://twitter.com/antonylima" title="Twitter" class="w-12 h-12 glass-effect rounded-full flex items-center justify-center hover:bg-gray-700 transition-colors" aria-label="Twitter" target="_blank" rel="noopener noreferrer">
                             <i class="fab fa-twitter"></i>
                         </a>
-                        <a href="#" class="w-12 h-12 glass-effect rounded-full flex items-center justify-center hover:bg-pink-600 transition-colors">
+                                    <a href="https://dribbble.com/antonylima" title="Dribbble" class="w-12 h-12 glass-effect rounded-full flex items-center justify-center hover:bg-gray-700 transition-colors" aria-label="Dribbble" target="_blank" rel="noopener noreferrer">
                             <i class="fab fa-dribbble"></i>
                         </a>
                     </div>
@@ -479,19 +493,19 @@
                 <div>
                     <form id="contact-form" class="space-y-6">
                         <div>
-                            <input type="text" placeholder="Your Name" 
-                                   class="w-full px-4 py-3 bg-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-600">
+                            <input type="text" id="user_name" placeholder="Your Name" 
+                                class="w-full px-4 py-3 bg-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500" required>
                         </div>
                         <div>
-                            <input type="email" placeholder="Your Email" 
-                                   class="w-full px-4 py-3 bg-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-600">
+                            <input type="email" id="user_email" placeholder="Your Email" 
+                                class="w-full px-4 py-3 bg-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500" required>
                         </div>
                         <div>
-                            <textarea placeholder="Your Message" rows="5" 
-                                      class="w-full px-4 py-3 bg-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-600"></textarea>
+                            <textarea id="message" placeholder="Your Message" rows="5" 
+                                class="w-full px-4 py-3 bg-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500" required></textarea>
                         </div>
-                        <button type="submit" 
-                                class="w-full py-3 bg-gradient-to-r from-purple-600 to-blue-600 rounded-lg font-semibold hover:scale-105 transition-transform">
+                          <button type="submit" 
+                              class="w-full py-3 btn-subtle rounded-lg font-semibold hover:scale-105 transition-transform">
                             Send Message
                         </button>
                     </form>
@@ -502,12 +516,15 @@
 
     <!-- Footer -->
     <footer class="py-8 px-6 text-center text-gray-400">
-        <p>&copy; 2024 Alex Chen. All rights reserved. Built with <i class="fas fa-heart text-red-500"></i> and code.</p>
+        <p>&copy; 2025 Sulivando. All rights reserved. Built with <i class="fas fa-heart gradient-text"></i> and code.</p>
     </footer>
 
     <script>
+        // EmailJS Initialization
+        emailjs.init('2penHCqpjNbBtENcg'); // Replace with your EmailJS public key
+
         // Typing Effect
-        const texts = ['Full Stack Developer', 'Creative Problem Solver', 'Tech Enthusiast', 'Open Source Contributor'];
+        const texts = ['Full Stack Developer', 'Game & Web Developer', 'Apps Designer', 'Open Source Contributor'];
         let textIndex = 0;
         let charIndex = 0;
         let isDeleting = false;
@@ -549,7 +566,9 @@
         const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
 
         mobileMenuBtn.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
+            const isOpen = mobileMenu.classList.toggle('hidden');
+            // update aria-expanded on the button
+            mobileMenuBtn.setAttribute('aria-expanded', (!isOpen).toString());
         });
 
         mobileNavLinks.forEach(link => {
@@ -560,6 +579,8 @@
 
         // Smooth Scrolling
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            // skip anchors intentionally marked as placeholders
+            if (anchor.getAttribute('data-placeholder') === 'true') return;
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
                 const target = document.querySelector(this.getAttribute('href'));
@@ -593,31 +614,64 @@
             skillObserver.observe(bar);
         });
 
-        // Form Submission
+        // Form Submission with EmailJS
         document.getElementById('contact-form').addEventListener('submit', (e) => {
             e.preventDefault();
             
-            // Create success message
-            const successMessage = document.createElement('div');
-            successMessage.className = 'fixed top-20 right-6 bg-green-600 text-white px-6 py-3 rounded-lg shadow-lg transform translate-x-full transition-transform';
-            successMessage.textContent = 'Message sent successfully!';
-            document.body.appendChild(successMessage);
-            
-            // Animate in
-            setTimeout(() => {
-                successMessage.style.transform = 'translateX(0)';
-            }, 100);
-            
-            // Animate out and remove
-            setTimeout(() => {
-                successMessage.style.transform = 'translateX(100%)';
-                setTimeout(() => {
-                    document.body.removeChild(successMessage);
-                }, 300);
-            }, 3000);
-            
-            // Reset form
-            e.target.reset();
+            const templateParams = {
+                user_name: document.getElementById('user_name').value,
+                user_email: document.getElementById('user_email').value,
+                message: document.getElementById('message').value,
+                to_email: 'sulivando.yahoo.com.br'
+            };
+
+            emailjs.send('service_lac7jva', 'template_zkikphc', templateParams)
+                .then(function(response) {
+                    console.log('SUCCESS!', response.status, response.text);
+                    
+                    // Create success message
+                    const successMessage = document.createElement('div');
+                    successMessage.className = 'fixed top-20 right-6 bg-green-600 text-white px-6 py-3 rounded-lg shadow-lg transform translate-x-full transition-transform';
+                    successMessage.textContent = 'Message sent successfully!';
+                    document.body.appendChild(successMessage);
+                    
+                    // Animate in
+                    setTimeout(() => {
+                        successMessage.style.transform = 'translateX(0)';
+                    }, 100);
+                    
+                    // Animate out and remove
+                    setTimeout(() => {
+                        successMessage.style.transform = 'translateX(100%)';
+                        setTimeout(() => {
+                            document.body.removeChild(successMessage);
+                        }, 300);
+                    }, 3000);
+                    
+                    // Reset form
+                    e.target.reset();
+                }, function(error) {
+                    console.log('FAILED...', error);
+                    
+                    // Create error message
+                    const errorMessage = document.createElement('div');
+                    errorMessage.className = 'fixed top-20 right-6 bg-red-600 text-white px-6 py-3 rounded-lg shadow-lg transform translate-x-full transition-transform';
+                    errorMessage.textContent = 'Failed to send message. Please try again.';
+                    document.body.appendChild(errorMessage);
+                    
+                    // Animate in
+                    setTimeout(() => {
+                        errorMessage.style.transform = 'translateX(0)';
+                    }, 100);
+                    
+                    // Animate out and remove
+                    setTimeout(() => {
+                        errorMessage.style.transform = 'translateX(100%)';
+                        setTimeout(() => {
+                            document.body.removeChild(errorMessage);
+                        }, 300);
+                    }, 3000);
+                });
         });
 
         // Navbar scroll effect
