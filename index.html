@@ -6,17 +6,123 @@
     <title>Sulivando - Full Stack Developer</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/index.min.js"></script>
+    <script type="module">
+        import emailjs from 'https://cdn.jsdelivr.net/npm/@emailjs/browser@4/+esm';
+        
+        // Initialize EmailJS
+        emailjs.init('2penHCqpjNbBtENcg');
+        console.log('EmailJS v4 initialized successfully');
+        
+        // Setup contact form
+        function setupContactForm() {
+            const contactForm = document.getElementById('contact-form');
+            if (!contactForm) return;
+            
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const formElement = this;
+                const userName = document.getElementById('user_name').value.trim();
+                const userEmail = document.getElementById('user_email').value.trim();
+                const message = document.getElementById('message').value.trim();
+                
+                // Validate form fields
+                if (!userName || !userEmail || !message) {
+                    alert('Please fill in all fields');
+                    return;
+                }
+                
+                // Show loading state
+                const submitBtn = formElement.querySelector('button[type="submit"]');
+                const originalText = submitBtn.textContent;
+                submitBtn.textContent = 'Sending...';
+                submitBtn.disabled = true;
+                
+                const templateParams = {
+                    user_name: userName,
+                    user_email: userEmail,
+                    message: message,
+                    to_email: 'sulivando.yahoo.com.br'
+                };
+
+                emailjs.send('service_lac7jva', 'template_zkikphc', templateParams)
+                    .then(function(response) {
+                        console.log('SUCCESS!', response.status, response.text);
+                        
+                        // Create success message
+                        const successMessage = document.createElement('div');
+                        successMessage.className = 'fixed top-20 right-6 bg-green-600 text-white px-6 py-3 rounded-lg shadow-lg transform translate-x-full transition-transform z-50';
+                        successMessage.textContent = 'Message sent successfully!';
+                        document.body.appendChild(successMessage);
+                        
+                        // Animate in
+                        setTimeout(() => {
+                            successMessage.style.transform = 'translateX(0)';
+                        }, 100);
+                        
+                        // Animate out and remove
+                        setTimeout(() => {
+                            successMessage.style.transform = 'translateX(100%)';
+                            setTimeout(() => {
+                                document.body.removeChild(successMessage);
+                            }, 300);
+                        }, 3000);
+                        
+                        // Reset form
+                        formElement.reset();
+                        submitBtn.textContent = originalText;
+                        submitBtn.disabled = false;
+                    }, function(error) {
+                        console.error('FAILED...', error);
+                        
+                        // Create error message
+                        const errorMessage = document.createElement('div');
+                        errorMessage.className = 'fixed top-20 right-6 bg-red-600 text-white px-6 py-3 rounded-lg shadow-lg transform translate-x-full transition-transform z-50';
+                        errorMessage.textContent = 'Failed to send message. Please try again.';
+                        document.body.appendChild(errorMessage);
+                        
+                        // Animate in
+                        setTimeout(() => {
+                            errorMessage.style.transform = 'translateX(0)';
+                        }, 100);
+                        
+                        // Animate out and remove
+                        setTimeout(() => {
+                            errorMessage.style.transform = 'translateX(100%)';
+                            setTimeout(() => {
+                                document.body.removeChild(errorMessage);
+                            }, 300);
+                        }, 3000);
+                        
+                        submitBtn.textContent = originalText;
+                        submitBtn.disabled = false;
+                    });
+            });
+        }
+        
+        // Setup form when DOM is ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', setupContactForm);
+        } else {
+            setupContactForm();
+        }
+    </script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
         
+        :root {
+            --accent: #2ecc71;
+            --accent-ring: rgba(46,204,113,0.18);
+            --focus-outline: 3px solid rgba(46,204,113,0.22);
+        }
+
         * {
             font-family: 'Inter', sans-serif;
         }
         
         /* Accent color (renamed to .accent) - vibrant green */
         .accent {
-            color: #2ecc71; /* vibrant green */
+            color: var(--accent); /* vibrant green */
         }
         
         /* removed old gradient-text in favor of .accent (flat elegant color) */
@@ -124,13 +230,229 @@
         ::-webkit-scrollbar-thumb:hover {
             background: #27ae60;
         }
+        /* Animation utilities */
+        @media (prefers-reduced-motion: reduce) {
+            .animate, .animate-on-scroll { animation: none !important; transition: none !important; }
+        }
+
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 600ms cubic-bezier(.2,.9,.2,1), transform 600ms cubic-bezier(.2,.9,.2,1);
+        }
+
+        .in-view.fade-in-up {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .float-subtle {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .btn-subtle {
+            transition: transform 240ms ease, box-shadow 240ms ease;
+        }
+
+        .btn-subtle:hover {
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 8px 30px rgba(46,204,113,0.08);
+        }
+
+        .project-card {
+            transform: translateY(0);
+            transition: transform 420ms cubic-bezier(.2,.9,.2,1), box-shadow 420ms ease;
+            perspective: 1200px;
+        }
+
+        .project-card.in-view {
+            transform: translateY(-8px) scale(1.01);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.45);
+        }
+
+        /* inner wrapper used for 3D tilt */
+        .card-inner {
+            transform-style: preserve-3d;
+            transition: transform 360ms cubic-bezier(.2,.9,.2,1), box-shadow 360ms ease;
+            will-change: transform;
+            backface-visibility: hidden;
+        }
+
+        /* Keyboard focus improvements for accessibility */
+        .focus-visible-ring:focus-visible {
+            outline: var(--focus-outline);
+            outline-offset: 4px;
+            box-shadow: 0 6px 18px var(--accent-ring);
+            border-radius: 8px;
+        }
+
+        /* Make interactive project cards keyboard-focusable and show subtle focus transform */
+        .project-card:focus-visible .card-inner {
+            transform: translateY(-6px) rotateX(4deg) rotateY(0deg) scale(1.01);
+            transition: transform 180ms ease;
+        }
+
+        /* Ensure focus styles respect reduced motion */
+        @media (prefers-reduced-motion: reduce) {
+            .card-inner,
+            .project-card:focus-visible .card-inner {
+                transition: none !important;
+                transform: none !important;
+            }
+            .focus-visible-ring:focus-visible {
+                box-shadow: none !important;
+                outline: 3px solid var(--accent) !important;
+            }
+        }
+
+        .project-card:hover .card-inner {
+            box-shadow: 0 30px 50px rgba(0,0,0,0.5);
+        }
+        /* Media/parallax inside card */
+        .card-media {
+            position: relative;
+            overflow: hidden;
+            transform: translateZ(0);
+            will-change: transform;
+        }
+
+        .card-media img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 560ms cubic-bezier(.2,.9,.2,1);
+            transform-origin: center center;
+            will-change: transform;
+        }
+
+        .card-overlay {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.25) 100%);
+            transition: opacity 360ms ease, transform 360ms ease;
+            opacity: 0;
+            transform: translateY(6px);
+        }
+
+        .project-card.in-view .card-overlay,
+        .project-card:hover .card-overlay {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .project-cta {
+            display: inline-flex;
+            gap: .5rem;
+            align-items: center;
+            transition: transform 200ms ease, color 200ms ease;
+        }
+
+        .project-cta:hover {
+            transform: translateX(6px);
+        }
+
+        .tech-icon {
+            transition: transform 300ms ease;
+        }
+
+        .tech-icon.in-view {
+            animation: pop 600ms ease forwards;
+        }
+
+        @keyframes pop {
+            0% { transform: scale(.85) translateY(6px); opacity: 0; }
+            60% { transform: scale(1.05) translateY(-4px); opacity: 1; }
+            100% { transform: scale(1) translateY(0); }
+        }
+
+        /* Carousel / swipe-one-by-one styles */
+        .projects-carousel {
+            position: relative;
+            max-width: 650px;
+            margin: 0 auto;
+        }
+
+        .projects-carousel .carousel-viewport {
+            overflow: hidden;
+            width: 100%;
+        }
+
+        .projects-carousel .carousel-track {
+            display: flex;
+            width: 100%;
+            transition: transform 360ms cubic-bezier(.2,.9,.2,1);
+            will-change: transform;
+        }
+
+        .projects-carousel .carousel-slide {
+            flex: 0 0 100%;
+            max-width: 100%;
+            padding: 0 0.5rem;
+            box-sizing: border-box;
+        }
+
+        .carousel-controls {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 40;
+            display: flex;
+            gap: .5rem;
+        }
+
+        .carousel-prev { left: 8px; }
+        .carousel-next { right: 8px; }
+
+        .carousel-button {
+            background: rgba(0,0,0,0.5);
+            color: #fff;
+            border: none;
+            padding: .5rem .75rem;
+            border-radius: 8px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            -webkit-backdrop-filter: blur(6px);
+            backdrop-filter: blur(6px);
+        }
+
+        .carousel-dots { gap: .5rem; }
+        .carousel-dot {
+            width: 10px; height: 10px; border-radius: 999px; background: rgba(255,255,255,0.12); cursor: pointer; border: 1px solid rgba(255,255,255,0.05);
+        }
+        .carousel-dot.active { background: var(--accent); box-shadow: 0 4px 12px var(--accent-ring); }
+
+        /* Landscape mode optimizations */
+        @media (orientation: landscape) {
+            .projects-carousel { margin: -10px auto; }
+            .projects-carousel .carousel-slide { padding: 0; }
+            .projects-carousel .carousel-viewport { max-width: 100%; margin: 0; }
+            .carousel-controls { top: 30%; gap: 0.25rem; }
+            .carousel-button { padding: 0.3rem 0.4rem; font-size: 0.75rem; }
+            .project-card { margin: 0 !important; }
+            .project-card .card-media { height: 100px !important; }
+            .project-card .p-6 { padding: 0.5rem 0.75rem !important; }
+            .project-card .text-xl { font-size: 0.9rem !important; }
+            .project-card .text-gray-300 { font-size: 0.8rem !important; }
+            .carousel-dot { width: 7px; height: 7px; }
+            .carousel-play { margin-left: 0.3rem; }
+            .carousel-play-button { padding: 0.2rem 0.3rem; font-size: 0.7rem; }
+        }
+
+        @media (min-width: 1024px) {
+            /* On larger screens we keep single-slide view but add side padding so cards look centered */
+            .projects-carousel .carousel-slide { padding: 0 1rem; }
+        }
     </style>
 </head>
 <body class="bg-gray-900 text-white overflow-x-hidden">
     <!-- Navigation -->
     <nav class="fixed top-0 w-full glass-effect z-50 px-6 py-4">
         <div class="max-w-7xl mx-auto flex justify-between items-center">
-            <div class="text-2xl font-bold gradient-text">S</div>
+            <div class="text-2xl font-bold accent">S</div>
             <div class="hidden md:flex space-x-8">
                 <a href="#home" class="nav-link">Home</a>
                 <a href="#about" class="nav-link">About</a>
@@ -164,10 +486,10 @@
         
         <div class="max-w-7xl mx-auto px-6 relative z-10">
             <div class="text-center">
-                <h1 class="text-5xl md:text-7xl font-bold mb-6">
+                <h1 class="text-5xl md:text-7xl font-bold mb-6 fade-in-up" data-animate>
                     Hi, I'm <span class="accent">Sulivando</span>
                 </h1>
-                <div class="text-2xl md:text-4xl mb-8 h-12">
+                <div class="text-2xl md:text-4xl mb-8 h-12 fade-in-up" data-animate>
                     <span id="typing-text" class="typing-cursor"></span>
                 </div>
                 <p class="text-xl text-gray-300 mb-12 max-w-2xl mx-auto">
@@ -214,15 +536,15 @@
                     
                     <div class="grid grid-cols-3 gap-4 text-center">
                         <div class="glass-effect p-4 rounded-lg">
-                            <div class="text-3xl font-bold accent">50+</div>
+                                <div class="text-3xl font-bold accent fade-in-up" data-animate>50+</div>
                             <div class="text-sm text-gray-400">Projects</div>
                         </div>
                         <div class="glass-effect p-4 rounded-lg">
-                            <div class="text-3xl font-bold accent">2+</div>
+                                <div class="text-3xl font-bold accent fade-in-up" data-animate>2+</div>
                             <div class="text-sm text-gray-400">Years Exp</div>
                         </div>
                         <div class="glass-effect p-4 rounded-lg">
-                            <div class="text-3xl font-bold accent">100%</div>
+                                <div class="text-3xl font-bold accent fade-in-up" data-animate>100%</div>
                             <div class="text-sm text-gray-400">Dedicated</div>
                         </div>
                     </div>
@@ -235,15 +557,15 @@
     <section id="skills" class="py-20 px-6 bg-gray-800">
         <div class="max-w-7xl mx-auto">
             <h2 class="text-4xl md:text-5xl font-bold text-center mb-16">
-                    My <span class="gradient-text">Skills</span>
+                    My <span class="accent">Skills</span>
                 </h2>
             
-            <div class="grid md:grid-cols-2 gap-12">
+                <div class="grid md:grid-cols-2 gap-12">
                 <div>
                     <h3 class="text-2xl font-semibold mb-8">Technical Skills</h3>
                     
                     <div class="space-y-6">
-                        <div>
+                        <div class="animate-on-scroll" data-animate>
                             <div class="flex justify-between mb-2">
                                 <span>JavaScript / TypeScript</span>
                                 <span>90%</span>
@@ -254,7 +576,7 @@
                             </div>
                         </div>
                         
-                        <div>
+                        <div class="animate-on-scroll" data-animate>
                             <div class="flex justify-between mb-2">
                                 <span>React / Next.js</span>
                                 <span>85%</span>
@@ -265,7 +587,7 @@
                             </div>
                         </div>
                         
-                        <div>
+                        <div class="animate-on-scroll" data-animate>
                             <div class="flex justify-between mb-2">
                                 <span>Node.js / Express</span>
                                 <span>80%</span>
@@ -276,7 +598,7 @@
                             </div>
                         </div>
                         
-                        <div>
+                        <div class="animate-on-scroll" data-animate>
                             <div class="flex justify-between mb-2">
                                 <span>Python / Django</span>
                                 <span>75%</span>
@@ -287,7 +609,7 @@
                             </div>
                         </div>
                         
-                        <div>
+                        <div class="animate-on-scroll" data-animate>
                             <div class="flex justify-between mb-2">
                                 <span>Database (SQL/NoSQL)</span>
                                 <span>70%</span>
@@ -356,88 +678,99 @@
     <section id="projects" class="py-20 px-6">
         <div class="max-w-7xl mx-auto">
             <h2 class="text-4xl md:text-5xl font-bold text-center mb-16">
-                Featured <span class="gradient-text">Projects</span>
+                Featured <span class="accent">Projects</span>
             </h2>
             
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Project 1 -->
-                <div class="project-card glass-effect rounded-lg overflow-hidden">
-                    <img src="https://picsum.photos/seed/project1/400/250" alt="E-Commerce Platform" 
-                         class="w-full h-48 object-cover">
-                    <div class="p-6">
-                        <h3 class="text-xl font-semibold mb-2">E-Commerce Platform</h3>
-                        <p class="text-gray-300 mb-4">
-                            A full-stack e-commerce solution with real-time inventory management and secure payment processing.
-                        </p>
-                        <div class="flex flex-wrap gap-2 mb-4">
-                            <span class="px-2 py-1 bg-gray-700 rounded text-xs text-gray-100">React</span>
-                            <span class="px-2 py-1 bg-gray-700 rounded text-xs text-gray-100">Node.js</span>
-                            <span class="px-2 py-1 bg-gray-700 rounded text-xs text-gray-100">MongoDB</span>
+            <div class="projects-carousel">
+                <div class="carousel-controls carousel-prev">
+                    <button class="carousel-button carousel-prev-btn" aria-label="Previous project"> <i class="fas fa-chevron-left"></i> </button>
+                </div>
+                <div class="carousel-viewport">
+                    <div class="carousel-track">
+                        <!-- Slide 1 -->
+                        <div class="carousel-slide">
+                            <div class="project-card glass-effect rounded-lg overflow-hidden focus-visible-ring" tabindex="0" aria-label="Open project: E-Commerce Platform">
+                                <div class="card-inner">
+                                    <div class="card-media h-48">
+                                        <img src="https://picsum.photos/seed/project1/400/250" alt="E-Commerce Platform" class="card-img">
+                                        <div class="card-overlay"></div>
+                                    </div>
+                                    <div class="p-6">
+                                        <h3 class="text-xl font-semibold mb-2">E-Commerce Platform</h3>
+                                        <p class="text-gray-300 mb-4">A full-stack e-commerce solution with real-time inventory management and secure payment processing.</p>
+                                        <div class="flex flex-wrap gap-2 mb-4">
+                                            <span class="px-2 py-1 bg-gray-700 rounded text-xs text-gray-100">React</span>
+                                            <span class="px-2 py-1 bg-gray-700 rounded text-xs text-gray-100">Node.js</span>
+                                            <span class="px-2 py-1 bg-gray-700 rounded text-xs text-gray-100">MongoDB</span>
+                                        </div>
+                                        <div class="flex gap-4">
+                                            <a href="projects/ecommerce.html" title="Live demo — E-Commerce Platform" class="accent" target="_blank" rel="noopener noreferrer"><i class="fas fa-external-link-alt"></i> Live Demo</a>
+                                            <a href="https://github.com/antonylima/ecommerce-platform" title="Source code — E-Commerce Platform" class="accent" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i> Code</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="flex gap-4">
-                            <a href="projects/ecommerce.html" title="Live demo — E-Commerce Platform" class="gradient-text" target="_blank" rel="noopener noreferrer">
-                                <i class="fas fa-external-link-alt"></i> Live Demo
-                            </a>
-                            <a href="https://github.com/antonylima/ecommerce-platform" title="Source code — E-Commerce Platform" class="gradient-text" target="_blank" rel="noopener noreferrer">
-                                <i class="fab fa-github"></i> Code
-                            </a>
+                        <!-- Slide 2 -->
+                        <div class="carousel-slide">
+                            <div class="project-card glass-effect rounded-lg overflow-hidden focus-visible-ring" tabindex="0" aria-label="Open project: Task Management App">
+                                <div class="card-inner">
+                                    <div class="card-media h-48">
+                                        <img src="https://picsum.photos/seed/project2/400/250" alt="Task Management App" class="card-img">
+                                        <div class="card-overlay"></div>
+                                    </div>
+                                    <div class="p-6">
+                                        <h3 class="text-xl font-semibold mb-2">Task Management App</h3>
+                                        <p class="text-gray-300 mb-4">Collaborative task management tool with real-time updates and team analytics dashboard.</p>
+                                        <div class="flex flex-wrap gap-2 mb-4">
+                                            <span class="px-2 py-1 bg-gray-700 rounded text-xs text-gray-100">Next.js</span>
+                                            <span class="px-2 py-1 bg-gray-700 rounded text-xs text-gray-100">TypeScript</span>
+                                            <span class="px-2 py-1 bg-gray-700 rounded text-xs text-gray-100">Firebase</span>
+                                        </div>
+                                        <div class="flex gap-4">
+                                            <a href="projects/task-manager.html" title="Live demo — Task Management App" class="accent" target="_blank" rel="noopener noreferrer"><i class="fas fa-external-link-alt"></i> Live Demo</a>
+                                            <a href="https://github.com/antonylima/task-manager" title="Source code — Task Management App" class="accent" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i> Code</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Slide 3 -->
+                        <div class="carousel-slide">
+                            <div class="project-card glass-effect rounded-lg overflow-hidden focus-visible-ring" tabindex="0" aria-label="Open project: Weather Dashboard">
+                                <div class="card-inner">
+                                    <div class="card-media h-48">
+                                        <img src="https://picsum.photos/seed/project3/400/250" alt="Weather Dashboard" class="card-img">
+                                        <div class="card-overlay"></div>
+                                    </div>
+                                    <div class="p-6">
+                                        <h3 class="text-xl font-semibold mb-2">Weather Dashboard</h3>
+                                        <p class="text-gray-300 mb-4">Interactive weather application with location-based forecasts and beautiful data visualizations.</p>
+                                        <div class="flex flex-wrap gap-2 mb-4">
+                                            <span class="px-2 py-1 bg-gray-700 rounded text-xs text-gray-100">Vue.js</span>
+                                            <span class="px-2 py-1 bg-gray-700 rounded text-xs text-gray-100">Chart.js</span>
+                                            <span class="px-2 py-1 bg-gray-700 rounded text-xs text-gray-100">API</span>
+                                        </div>
+                                        <div class="flex gap-4">
+                                            <a href="projects/weather-dashboard.html" title="Live demo — Weather Dashboard" class="accent" target="_blank" rel="noopener noreferrer"><i class="fas fa-external-link-alt"></i> Live Demo</a>
+                                            <a href="https://github.com/antonylima/weather-dashboard" title="Source code — Weather Dashboard" class="accent" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i> Code</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-                
-                <!-- Project 2 -->
-                <div class="project-card glass-effect rounded-lg overflow-hidden">
-                    <img src="https://picsum.photos/seed/project2/400/250" alt="Task Management App" 
-                         class="w-full h-48 object-cover">
-                    <div class="p-6">
-                        <h3 class="text-xl font-semibold mb-2">Task Management App</h3>
-                        <p class="text-gray-300 mb-4">
-                            Collaborative task management tool with real-time updates and team analytics dashboard.
-                        </p>
-                        <div class="flex flex-wrap gap-2 mb-4">
-                            <span class="px-2 py-1 bg-gray-700 rounded text-xs text-gray-100">Next.js</span>
-                            <span class="px-2 py-1 bg-gray-700 rounded text-xs text-gray-100">TypeScript</span>
-                            <span class="px-2 py-1 bg-gray-700 rounded text-xs text-gray-100">Firebase</span>
-                        </div>
-                        <div class="flex gap-4">
-                            <a href="projects/task-manager.html" title="Live demo — Task Management App" class="gradient-text" target="_blank" rel="noopener noreferrer">
-                                <i class="fas fa-external-link-alt"></i> Live Demo
-                            </a>
-                            <a href="https://github.com/antonylima/task-manager" title="Source code — Task Management App" class="gradient-text" target="_blank" rel="noopener noreferrer">
-                                <i class="fab fa-github"></i> Code
-                            </a>
-                        </div>
-                    </div>
+                <div class="carousel-controls carousel-next">
+                    <button class="carousel-button carousel-next-btn" aria-label="Next project"> <i class="fas fa-chevron-right"></i> </button>
                 </div>
-                
-                <!-- Project 3 -->
-                <div class="project-card glass-effect rounded-lg overflow-hidden">
-                    <img src="https://picsum.photos/seed/project3/400/250" alt="Weather Dashboard" 
-                         class="w-full h-48 object-cover">
-                    <div class="p-6">
-                        <h3 class="text-xl font-semibold mb-2">Weather Dashboard</h3>
-                        <p class="text-gray-300 mb-4">
-                            Interactive weather application with location-based forecasts and beautiful data visualizations.
-                        </p>
-                        <div class="flex flex-wrap gap-2 mb-4">
-                            <span class="px-2 py-1 bg-gray-700 rounded text-xs text-gray-100">Vue.js</span>
-                            <span class="px-2 py-1 bg-gray-700 rounded text-xs text-gray-100">Chart.js</span>
-                            <span class="px-2 py-1 bg-gray-700 rounded text-xs text-gray-100">API</span>
-                        </div>
-                        <div class="flex gap-4">
-                            <a href="projects/weather-dashboard.html" title="Live demo — Weather Dashboard" class="gradient-text" target="_blank" rel="noopener noreferrer">
-                                <i class="fas fa-external-link-alt"></i> Live Demo
-                            </a>
-                            <a href="https://github.com/antonylima/weather-dashboard" title="Source code — Weather Dashboard" class="gradient-text" target="_blank" rel="noopener noreferrer">
-                                <i class="fab fa-github"></i> Code
-                            </a>
-                        </div>
-                    </div>
+                <div class="flex justify-center mt-6 items-center">
+                    <div class="carousel-dots" role="tablist" aria-label="Project pagination"></div>
                 </div>
             </div>
             
             <div class="text-center mt-12">
-                <a href="projects/index.html" title="All projects" class="inline-flex items-center gap-2 gradient-text hover:text-yellow-400">
+                <a href="projects/index.html" title="All projects" class="inline-flex items-center gap-2 accent hover:text-yellow-400">
                     View All Projects <i class="fas fa-arrow-right"></i>
                 </a>
             </div>
@@ -448,7 +781,7 @@
     <section id="contact" class="py-20 px-6 bg-gray-800">
         <div class="max-w-4xl mx-auto">
             <h2 class="text-4xl md:text-5xl font-bold text-center mb-16">
-                Get In <span class="gradient-text">Touch</span>
+                Get In <span class="accent">Touch</span>
             </h2>
             
             <div class="grid md:grid-cols-2 gap-12">
@@ -516,13 +849,10 @@
 
     <!-- Footer -->
     <footer class="py-8 px-6 text-center text-gray-400">
-        <p>&copy; 2025 Sulivando. All rights reserved. Built with <i class="fas fa-heart gradient-text"></i> and code.</p>
+        <p>&copy; 2025 Sulivando. All rights reserved. Built with <i class="fas fa-heart accent"></i> and code.</p>
     </footer>
 
     <script>
-        // EmailJS Initialization
-        emailjs.init('2penHCqpjNbBtENcg'); // Replace with your EmailJS public key
-
         // Typing Effect
         const texts = ['Full Stack Developer', 'Game & Web Developer', 'Apps Designer', 'Open Source Contributor'];
         let textIndex = 0;
@@ -614,65 +944,269 @@
             skillObserver.observe(bar);
         });
 
-        // Form Submission with EmailJS
-        document.getElementById('contact-form').addEventListener('submit', (e) => {
-            e.preventDefault();
-            
-            const templateParams = {
-                user_name: document.getElementById('user_name').value,
-                user_email: document.getElementById('user_email').value,
-                message: document.getElementById('message').value,
-                to_email: 'sulivando.yahoo.com.br'
-            };
+        // Animate elements when they enter the viewport
+        const animatedObserver = new IntersectionObserver((entries) => {
+            entries.forEach((entry, idx) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('in-view');
+                    // If it's a skill container, animate contained bars with stagger
+                    if (entry.target.classList.contains('animate-on-scroll')) {
+                        const bars = entry.target.querySelectorAll('.skill-bar');
+                        bars.forEach((b, i) => {
+                            setTimeout(() => {
+                                b.style.width = b.getAttribute('data-width');
+                            }, i * 120);
+                        });
+                    }
+                    animatedObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.35 });
 
-            emailjs.send('service_lac7jva', 'template_zkikphc', templateParams)
-                .then(function(response) {
-                    console.log('SUCCESS!', response.status, response.text);
-                    
-                    // Create success message
-                    const successMessage = document.createElement('div');
-                    successMessage.className = 'fixed top-20 right-6 bg-green-600 text-white px-6 py-3 rounded-lg shadow-lg transform translate-x-full transition-transform';
-                    successMessage.textContent = 'Message sent successfully!';
-                    document.body.appendChild(successMessage);
-                    
-                    // Animate in
-                    setTimeout(() => {
-                        successMessage.style.transform = 'translateX(0)';
-                    }, 100);
-                    
-                    // Animate out and remove
-                    setTimeout(() => {
-                        successMessage.style.transform = 'translateX(100%)';
-                        setTimeout(() => {
-                            document.body.removeChild(successMessage);
-                        }, 300);
-                    }, 3000);
-                    
-                    // Reset form
-                    e.target.reset();
-                }, function(error) {
-                    console.log('FAILED...', error);
-                    
-                    // Create error message
-                    const errorMessage = document.createElement('div');
-                    errorMessage.className = 'fixed top-20 right-6 bg-red-600 text-white px-6 py-3 rounded-lg shadow-lg transform translate-x-full transition-transform';
-                    errorMessage.textContent = 'Failed to send message. Please try again.';
-                    document.body.appendChild(errorMessage);
-                    
-                    // Animate in
-                    setTimeout(() => {
-                        errorMessage.style.transform = 'translateX(0)';
-                    }, 100);
-                    
-                    // Animate out and remove
-                    setTimeout(() => {
-                        errorMessage.style.transform = 'translateX(100%)';
-                        setTimeout(() => {
-                            document.body.removeChild(errorMessage);
-                        }, 300);
-                    }, 3000);
-                });
+        // Elements to animate
+        document.querySelectorAll('[data-animate]').forEach(el => {
+            // set initial state for fade-in-up
+            el.classList.add('fade-in-up');
+            animatedObserver.observe(el);
         });
+
+        // Observe project cards and tech icons
+        document.querySelectorAll('.project-card, .tech-icon').forEach(el => animatedObserver.observe(el));
+
+        // 3D tilt + parallax for project cards (respect reduced-motion, touch and small screens)
+        (function setupCardInteractions(){
+            const cardRaf = new WeakMap();
+            const isTouch = ('ontouchstart' in window) || navigator.maxTouchPoints > 0;
+            const minWidthForTilt = 768;
+
+            document.querySelectorAll('.project-card').forEach(card => {
+                const inner = card.querySelector('.card-inner');
+                const media = card.querySelector('.card-media');
+                const img = card.querySelector('.card-img');
+                const overlay = card.querySelector('.card-overlay');
+                if (!inner) return;
+
+                // disable on touch devices or small viewports
+                if (isTouch || window.innerWidth < minWidthForTilt) {
+                    card.classList.add('no-tilt');
+                    return;
+                }
+
+                function handleMove(e) {
+                    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+                    const rect = card.getBoundingClientRect();
+                    const px = (e.clientX - rect.left) / rect.width;
+                    const py = (e.clientY - rect.top) / rect.height;
+
+                    const rotY = (px - 0.5) * 14; // tilt intensity
+                    const rotX = (0.5 - py) * 10;
+                    const tx = (px - 0.5) * 8;
+                    const ty = (py - 0.5) * 8;
+
+                    if (cardRaf.get(card)) cancelAnimationFrame(cardRaf.get(card));
+                    const id = requestAnimationFrame(() => {
+                        inner.style.transform = `rotateX(${rotX}deg) rotateY(${rotY}deg) translate3d(${tx}px, ${ty}px, 0)`;
+                        if (img) {
+                            // parallax moves opposite and slightly scaled
+                            const imgTx = (px - 0.5) * -18;
+                            const imgTy = (py - 0.5) * -12;
+                            img.style.transform = `translate3d(${imgTx}px, ${imgTy}px, 30px) scale(1.06)`;
+                        }
+                        if (overlay) {
+                            overlay.style.transform = `translate3d(${tx * 0.5}px, ${ty * 0.5}px, 0)`;
+                        }
+                    });
+                    cardRaf.set(card, id);
+                }
+
+                function resetMove() {
+                    if (cardRaf.get(card)) cancelAnimationFrame(cardRaf.get(card));
+                    inner.style.transform = '';
+                    if (img) img.style.transform = '';
+                    if (overlay) overlay.style.transform = '';
+                }
+
+                function enterMove(){
+                    inner.style.transition = 'transform 220ms ease';
+                    if (img) img.style.transition = 'transform 420ms cubic-bezier(.2,.9,.2,1)';
+                    setTimeout(()=>{ inner.style.transition=''; if (img) img.style.transition=''; }, 300);
+                }
+
+                card.addEventListener('mousemove', handleMove, { passive: true });
+                card.addEventListener('mouseleave', resetMove);
+                card.addEventListener('mouseenter', enterMove);
+                // Keyboard activation: Enter or Space should open the first link in the card
+                card.addEventListener('keydown', (ev) => {
+                    if (ev.key === 'Enter' || ev.key === ' ') {
+                        ev.preventDefault();
+                        const firstLink = card.querySelector('a');
+                        if (firstLink) firstLink.click();
+                    }
+                });
+
+                // Support keyboard focus visual/interaction
+                card.addEventListener('focus', () => {
+                    if (!isTouch && window.innerWidth >= minWidthForTilt && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                        enterMove();
+                    }
+                });
+
+                card.addEventListener('blur', resetMove);
+            });
+        })();
+
+        // Carousel: swipe / one-by-one navigation for project slides
+        (function setupCarousel(){
+            const carousel = document.querySelector('.projects-carousel');
+            if (!carousel) return;
+            const track = carousel.querySelector('.carousel-track');
+            const slides = Array.from(carousel.querySelectorAll('.carousel-slide'));
+            const prevBtn = carousel.querySelector('.carousel-prev-btn');
+            const nextBtn = carousel.querySelector('.carousel-next-btn');
+            const dotsContainer = carousel.querySelector('.carousel-dots');
+
+            let current = 0;
+            const total = slides.length;
+
+            // Configurable options via data-attributes
+            const autoplayDelay = parseInt(carousel.dataset.autoplay || '4500', 10);
+            const autoplayEnabledDefault = (carousel.dataset.autoplayEnabled !== 'false');
+            const swipeThreshold = parseFloat(carousel.dataset.swipeThreshold || '0.18'); // fraction
+            const velocityThreshold = parseFloat(carousel.dataset.velocityThreshold || '0.45'); // px/ms
+
+            let autoplayEnabled = autoplayEnabledDefault && !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            let autoplayTimer = null;
+
+            let isDragging = false;
+            let startX = 0;
+            let startTime = 0;
+            let lastX = 0;
+            let lastTime = 0;
+            let prevTranslate = 0;
+
+            // Create dots
+            function createDots(){
+                if (!dotsContainer) return;
+                dotsContainer.innerHTML = '';
+                slides.forEach((s, i) => {
+                    const dot = document.createElement('button');
+                    dot.className = 'carousel-dot';
+                    dot.setAttribute('aria-label', `Go to project ${i+1}`);
+                    dot.setAttribute('role', 'tab');
+                    dot.addEventListener('click', () => { goTo(i); resetAutoplay(); });
+                    dotsContainer.appendChild(dot);
+                });
+            }
+
+            function updateDots(){
+                const dots = Array.from(dotsContainer.children || []);
+                dots.forEach((d, i) => d.classList.toggle('active', i === current));
+            }
+
+            function goTo(index, {announce=true} = {}){
+                current = (index + total) % total;
+                const x = -current * 100;
+                track.style.transform = `translateX(${x}%)`;
+                slides.forEach((s, i) => s.setAttribute('aria-hidden', i !== current));
+                updateDots();
+            }
+
+            // Autoplay controls
+            function startAutoplay(){
+                if (!autoplayEnabled || autoplayTimer) return;
+                autoplayTimer = setInterval(() => {
+                    goTo(current + 1);
+                }, autoplayDelay);
+            }
+
+            function stopAutoplay(){
+                if (autoplayTimer) {
+                    clearInterval(autoplayTimer);
+                    autoplayTimer = null;
+                }
+            }
+
+            function resetAutoplay(){
+                stopAutoplay();
+                // restart after short delay if enabled
+                if (autoplayEnabled) {
+                    setTimeout(() => startAutoplay(), 2000);
+                }
+            }
+
+            prevBtn && prevBtn.addEventListener('click', () => { goTo(current - 1); resetAutoplay(); });
+            nextBtn && nextBtn.addEventListener('click', () => { goTo(current + 1); resetAutoplay(); });
+
+            // Pointer (touch/mouse) drag handling with velocity for momentum
+            track.addEventListener('pointerdown', (ev) => {
+                isDragging = true;
+                startX = ev.clientX;
+                startTime = ev.timeStamp || Date.now();
+                lastX = startX;
+                lastTime = startTime;
+                prevTranslate = -current * track.clientWidth;
+                track.style.transition = 'none';
+                track.setPointerCapture(ev.pointerId);
+                stopAutoplay();
+            });
+
+            track.addEventListener('pointermove', (ev) => {
+                if (!isDragging) return;
+                const dx = ev.clientX - startX;
+                const now = ev.timeStamp || Date.now();
+                // update lastX/time for velocity calc
+                lastX = ev.clientX;
+                lastTime = now;
+                track.style.transform = `translateX(${prevTranslate + dx}px)`;
+            });
+
+            track.addEventListener('pointerup', (ev) => {
+                if (!isDragging) return;
+                isDragging = false;
+                const endX = ev.clientX;
+                const endTime = ev.timeStamp || Date.now();
+                const dx = endX - startX;
+                const dt = Math.max(1, endTime - startTime);
+                const velocity = dx / dt; // px per ms
+                const width = track.clientWidth || carousel.clientWidth || window.innerWidth;
+                const distanceThreshold = width * swipeThreshold;
+
+                track.style.transition = ''; // restore transitions
+
+                // Decide based on velocity first, then distance
+                if (Math.abs(velocity) > velocityThreshold) {
+                    if (velocity < 0) goTo(current + 1);
+                    else goTo(current - 1);
+                } else if (dx > distanceThreshold) {
+                    goTo(current - 1);
+                } else if (dx < -distanceThreshold) {
+                    goTo(current + 1);
+                } else {
+                    goTo(current);
+                }
+
+                resetAutoplay();
+            });
+
+            // Cancel capture / reset on cancel or leave
+            track.addEventListener('pointercancel', () => { isDragging = false; goTo(current); resetAutoplay(); });
+
+            window.addEventListener('keydown', (ev) => {
+                if (ev.key === 'ArrowLeft') { goTo(current - 1); resetAutoplay(); }
+                if (ev.key === 'ArrowRight') { goTo(current + 1); resetAutoplay(); }
+            });
+
+            // Make images non-draggable inside carousel
+            slides.forEach(s => {
+                const img = s.querySelector('img');
+                if (img) img.setAttribute('draggable', 'false');
+            });
+
+            // initialize
+            createDots();
+            goTo(0);
+            if (autoplayEnabled) startAutoplay();
+        })();
 
         // Navbar scroll effect
         let lastScroll = 0;
