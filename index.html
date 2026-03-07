@@ -425,6 +425,13 @@
             width: 100%;
             transition: transform 360ms cubic-bezier(.2, .9, .2, 1);
             will-change: transform;
+            touch-action: pan-y;
+            /* permite scroll vertical, captura swipe horizontal */
+            cursor: grab;
+        }
+
+        .projects-carousel .carousel-track:active {
+            cursor: grabbing;
         }
 
         .projects-carousel .carousel-slide {
@@ -545,9 +552,8 @@
                 scroll-margin-top: 3.5rem;
             }
 
-            /* Título compacto */
+            /* Título no tamanho padrão, só reduz margem inferior */
             #projects h2 {
-                font-size: 1.4rem !important;
                 margin-bottom: 0.4rem !important;
             }
 
@@ -578,9 +584,11 @@
             /* Texto: 50% restante */
             .card-content {
                 flex: 1;
-                overflow-y: auto;
+                overflow-y: hidden;
                 padding: 0.75rem !important;
                 gap: 0.3rem !important;
+                touch-action: pan-y;
+                /* swipe horizontal passa para o carrossel */
             }
 
             .card-content h3 {
@@ -591,9 +599,18 @@
                 -webkit-line-clamp: 2;
             }
 
-            /* Slider */
+            /* Slider — botões fora do card para não ficarem atrás da imagem */
             .carousel-controls {
                 top: 50%;
+                z-index: 50;
+            }
+
+            .carousel-prev {
+                left: -12px;
+            }
+
+            .carousel-next {
+                right: -12px;
             }
 
             .carousel-button {
@@ -1351,13 +1368,17 @@
             nextBtn && nextBtn.addEventListener('click', () => { goTo(current + 1); resetAutoplay(); });
 
             // Pointer (touch/mouse) drag handling with velocity for momentum
+            const viewport = carousel.querySelector('.carousel-viewport');
+
             track.addEventListener('pointerdown', (ev) => {
                 isDragging = true;
                 startX = ev.clientX;
                 startTime = ev.timeStamp || Date.now();
                 lastX = startX;
                 lastTime = startTime;
-                prevTranslate = -current * track.clientWidth;
+                // Usar largura do viewport (= largura de 1 slide), não do track todo
+                const slideWidth = viewport ? viewport.clientWidth : track.clientWidth;
+                prevTranslate = -current * slideWidth;
                 track.style.transition = 'none';
                 track.setPointerCapture(ev.pointerId);
                 stopAutoplay();
@@ -1367,7 +1388,6 @@
                 if (!isDragging) return;
                 const dx = ev.clientX - startX;
                 const now = ev.timeStamp || Date.now();
-                // update lastX/time for velocity calc
                 lastX = ev.clientX;
                 lastTime = now;
                 track.style.transform = `translateX(${prevTranslate + dx}px)`;
@@ -1381,8 +1401,8 @@
                 const dx = endX - startX;
                 const dt = Math.max(1, endTime - startTime);
                 const velocity = dx / dt; // px per ms
-                const width = track.clientWidth || carousel.clientWidth || window.innerWidth;
-                const distanceThreshold = width * swipeThreshold;
+                const slideWidth = viewport ? viewport.clientWidth : track.clientWidth;
+                const distanceThreshold = slideWidth * swipeThreshold;
 
                 track.style.transition = ''; // restore transitions
 
