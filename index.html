@@ -287,6 +287,33 @@
             transition: transform 420ms cubic-bezier(.2, .9, .2, 1), box-shadow 420ms ease;
             perspective: 1200px;
             aspect-ratio: 1 / 1;
+            width: 100%;
+        }
+
+        /* landscape cards: wider 2:1 ratio with image/text halves */
+        @media (orientation: landscape) {
+            .project-card {
+                aspect-ratio: 2 / 1;
+            }
+
+            .card-inner {
+                flex-direction: row !important;
+                height: auto !important;
+            }
+
+            .card-media {
+                flex: 0 0 50% !important;
+                aspect-ratio: 1 / 1 !important;
+                height: auto !important;
+            }
+
+            .card-content {
+                flex: 0 0 50% !important;
+                overflow-y: auto;
+                padding: 0.75rem !important;
+                gap: 0.3rem !important;
+                touch-action: pan-y;
+            }
         }
 
         .project-card.in-view {
@@ -357,6 +384,14 @@
             will-change: transform;
         }
 
+        /* when card is in landscape layout, avoid harsh cropping */
+        @media (orientation: landscape) {
+            .card-media img {
+                object-fit: contain;
+                background: #000; /* letterbox color if extra space */
+            }
+        }
+
         .card-overlay {
             position: absolute;
             inset: 0;
@@ -411,7 +446,8 @@
         /* Carousel / swipe-one-by-one styles */
         .projects-carousel {
             position: relative;
-            max-width: 480px;
+            /* responsive width: 80% of viewport width to slightly shrink cards */
+            max-width: 80vw;
             margin: 0 auto;
         }
 
@@ -494,26 +530,24 @@
         .card-content {
             display: flex;
             flex-direction: column;
+            justify-content: center; /* center the text block vertically in the card */
             flex: 1;
-            overflow: hidden;
             padding: 0.75rem;
             gap: 0.3rem;
+            text-align: center; /* center text horizontally */
         }
 
         .card-content h3 {
-            font-size: 0.95rem;
+            font-size: 1.25rem; /* match section headers */
             font-weight: 600;
             margin: 0 0 0.15rem;
         }
 
         .card-desc {
-            font-size: 0.72rem;
+            font-size: 0.875rem; /* standard body size */
             color: #d1d5db;
-            overflow: hidden;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
             margin: 0 0 0.3rem;
+            text-align: left; /* align description to left */
         }
 
         .card-tags {
@@ -526,14 +560,13 @@
             padding: 0.1rem 0.4rem;
             background: #374151;
             border-radius: 4px;
-            font-size: 0.65rem;
+            font-size: 0.75rem; /* readable tag size */
             color: #f3f4f6;
         }
 
         .card-links {
             display: flex;
             gap: 0.75rem;
-            margin-top: auto;
             padding-top: 0.3rem;
             align-items: center;
         }
@@ -542,104 +575,7 @@
             font-size: 0.75rem;
         }
 
-        /* ─── Paisagem: celular deitado (altura ≤ 500px) ─────────────────────── */
-        @media (orientation: landscape) and (max-height: 500px) {
 
-            /* Compensa navbar fixa */
-            #projects {
-                padding-top: 3.75rem !important;
-                padding-bottom: 0.25rem !important;
-                scroll-margin-top: 3.5rem;
-            }
-
-            /* Título no tamanho padrão, só reduz margem inferior */
-            #projects h2 {
-                margin-bottom: 0.4rem !important;
-            }
-
-            /* Carrossel responsivo: 90% da largura da tela */
-            .projects-carousel {
-                max-width: 90%;
-                margin: 0 auto;
-            }
-
-            /* Card sem aspect-ratio quadrado */
-            .project-card {
-                aspect-ratio: unset !important;
-            }
-
-            /* Layout 2 por 1: imagem | texto, lado a lado */
-            .card-inner {
-                flex-direction: row !important;
-                height: auto !important;
-            }
-
-            /* Imagem: 50% da largura, quadrada (1:1) */
-            .card-media {
-                flex: 0 0 50% !important;
-                aspect-ratio: 1 / 1 !important;
-                height: auto !important;
-            }
-
-            /* Texto: 50% restante */
-            .card-content {
-                flex: 1;
-                overflow-y: hidden;
-                padding: 0.75rem !important;
-                gap: 0.3rem !important;
-                touch-action: pan-y;
-                /* swipe horizontal passa para o carrossel */
-            }
-
-            .card-content h3 {
-                font-size: 0.9rem;
-            }
-
-            .card-desc {
-                -webkit-line-clamp: 2;
-            }
-
-            /* Slider — botões fora do card para não ficarem atrás da imagem */
-            .carousel-controls {
-                top: 50%;
-                z-index: 50;
-            }
-
-            .carousel-prev {
-                left: -12px;
-            }
-
-            .carousel-next {
-                right: -12px;
-            }
-
-            .carousel-button {
-                padding: 0.3rem 0.4rem;
-                font-size: 0.75rem;
-            }
-
-            .carousel-dots {
-                display: flex !important;
-                margin-top: 0.3rem;
-            }
-
-            .carousel-dot {
-                width: 6px;
-                height: 6px;
-            }
-        }
-
-        /* ─── Paisagem: tablet/desktop (altura > 500px) ─────────────────────── */
-        @media (orientation: landscape) and (min-height: 501px) {
-            .projects-carousel {
-                margin: 0 auto;
-                max-width: min(55vh, 480px);
-            }
-
-            .projects-carousel .carousel-slide {
-                padding: 0 0.25rem;
-            }
-        }
 
         @media (min-width: 1024px) and (min-height: 600px) {
             .projects-carousel .carousel-slide {
@@ -736,7 +672,7 @@
                 <div>
                     <h3 class="text-2xl font-semibold mb-4">Full Stack Developer & Creative Thinker</h3>
                     <p class="text-gray-300 mb-6">
-                        I'm Sulivando — a Full Stack developer focused on web apps and games. I combine design sense
+                        I'm Sulivando — a Full Stack developer focused on web apps and automated solutions. I combine design sense
                         with engineering to ship polished products.
                     </p>
                     <p class="text-gray-300 mb-6">
@@ -891,26 +827,25 @@
                         <!-- Slide 1 -->
                         <div class="carousel-slide">
                             <div class="project-card glass-effect rounded-lg overflow-hidden focus-visible-ring"
-                                tabindex="0" aria-label="Open project: E-Commerce Platform">
+                                tabindex="0" aria-label="Open project: Somnacity">
                                 <div class="card-inner">
                                     <div class="card-media">
-                                        <img src="" alt="E-Commerce Platform" class="card-img">
+                                        <img src="assets/snccover.png" alt="Somnacity" class="card-img">
                                         <div class="card-overlay"></div>
                                     </div>
                                     <div class="card-content">
-                                        <h3>E-Commerce Platform</h3>
-                                        <p class="card-desc">Full-stack e-commerce with real-time inventory management
-                                            and secure payment processing.</p>
+                                        <h3>Somnacity</h3>
+                                        <p class="card-desc">O Somnacity é uma plataforma digital que centraliza a agenda de música ao vivo em bares e espaços de entretenimento de Fortaleza. O projeto funciona como um agregador inteligente que automatiza a coleta de informações, organiza os dados com apoio de IA e oferece ao usuário uma forma simples e rápida de descobrir onde está tocando na cidade.</p>
                                         <div class="card-tags">
-                                            <span class="card-tag">React</span>
-                                            <span class="card-tag">Node.js</span>
-                                            <span class="card-tag">MongoDB</span>
+                                            <span class="card-tag">PHP</span>
+                                            <span class="card-tag">MySQL</span>
+                                            <span class="card-tag">LLM</span>
                                         </div>
                                         <div class="card-links">
-                                            <a href="projects/ecommerce.html" title="Live demo — E-Commerce Platform"
+                                            <a href="http://somnacity.com.br" title="Live demo
                                                 class="accent" target="_blank" rel="noopener noreferrer"><i
                                                     class="fas fa-external-link-alt"></i> Live Demo</a>
-                                            <a href="#" title="Source code — E-Commerce Platform" class="accent"
+                                            <a href="#" title="Source code" class="accent"
                                                 target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i>
                                                 Code</a>
                                         </div>
@@ -921,28 +856,26 @@
                         <!-- Slide 2 -->
                         <div class="carousel-slide">
                             <div class="project-card glass-effect rounded-lg overflow-hidden focus-visible-ring"
-                                tabindex="0" aria-label="Open project: Task Management App">
+                                tabindex="0" aria-label="Nostaplay">
                                 <div class="card-inner">
                                     <div class="card-media">
-                                        <img src="https://picsum.photos/seed/project2/400/250" alt="Task Management App"
+                                        <img src="assets/nosta.png" alt="Nostaplay"
                                             class="card-img">
                                         <div class="card-overlay"></div>
                                     </div>
                                     <div class="card-content">
-                                        <h3>Task Management App</h3>
-                                        <p class="card-desc">Collaborative task management tool with real-time updates
-                                            and team analytics dashboard.</p>
+                                        <h3>Nostaplay</h3>
+                                        <p class="card-desc">Plataforma de áudio web com identidade inspirada na nostalgia digital, combinando design minimalista e interface direta. O projeto explora simplicidade intencional, onde o visual reduzido e o nome refletem a proposta central: abrir, dar play e ouvir, oferecendo uma experiência de áudio que é ao mesmo tempo moderna e evocativa de memórias passadas.</p>
                                         <div class="card-tags">
-                                            <span class="card-tag">Next.js</span>
-                                            <span class="card-tag">TypeScript</span>
-                                            <span class="card-tag">Firebase</span>
+                                            <span class="card-tag">JavaScript</span>
+                                            <span class="card-tag">PHP</span>
                                         </div>
                                         <div class="card-links">
-                                            <a href="projects/task-manager.html" title="Live demo — Task Management App"
+                                            <a href="https://nostaplay.com/" title="Live demo"
                                                 class="accent" target="_blank" rel="noopener noreferrer"><i
                                                     class="fas fa-external-link-alt"></i> Live Demo</a>
-                                            <a href="https://github.com/antonylima/task-manager"
-                                                title="Source code — Task Management App" class="accent" target="_blank"
+                                            <a href="#"
+                                                title="Source code" class="accent" target="_blank"
                                                 rel="noopener noreferrer"><i class="fab fa-github"></i> Code</a>
                                         </div>
                                     </div>
@@ -952,29 +885,27 @@
                         <!-- Slide 3 -->
                         <div class="carousel-slide">
                             <div class="project-card glass-effect rounded-lg overflow-hidden focus-visible-ring"
-                                tabindex="0" aria-label="Open project: Weather Dashboard">
+                                tabindex="0" aria-label="Personal Page">
                                 <div class="card-inner">
                                     <div class="card-media">
-                                        <img src="https://picsum.photos/seed/project3/400/250" alt="Weather Dashboard"
+                                        <img src="assets/personal.png" alt="Personal Page"
                                             class="card-img">
                                         <div class="card-overlay"></div>
                                     </div>
                                     <div class="card-content">
-                                        <h3>Weather Dashboard</h3>
-                                        <p class="card-desc">Interactive weather app with location-based forecasts and
-                                            beautiful data visualizations.</p>
+                                        <h3>Personal Page</h3>
+                                        <p class="card-desc">Site pessoal desenvolvido com foco em apresentar trabalhos, ideias e motivações profissionais de forma clara e objetiva. O projeto prioriza simplicidade, organização de conteúdo e uma experiência direta. Criado em 2023, funciona como um ponto central para reunir informações profissionais e facilitar conexões. Simples, mas com propósito e clareza.</p>
                                         <div class="card-tags">
-                                            <span class="card-tag">Vue.js</span>
-                                            <span class="card-tag">Chart.js</span>
-                                            <span class="card-tag">API</span>
+                                            <span class="card-tag">JavaScript</span>
+                                            <span class="card-tag">PHP</span>
                                         </div>
                                         <div class="card-links">
-                                            <a href="projects/weather-dashboard.html"
-                                                title="Live demo — Weather Dashboard" class="accent" target="_blank"
+                                            <a href="https://sulivando.kesug.com"
+                                                title="Live demo" class="accent" target="_blank"
                                                 rel="noopener noreferrer"><i class="fas fa-external-link-alt"></i> Live
                                                 Demo</a>
-                                            <a href="https://github.com/antonylima/weather-dashboard"
-                                                title="Source code — Weather Dashboard" class="accent" target="_blank"
+                                            <a href="#"
+                                                title="Source code" class="accent" target="_blank"
                                                 rel="noopener noreferrer"><i class="fab fa-github"></i> Code</a>
                                         </div>
                                     </div>
