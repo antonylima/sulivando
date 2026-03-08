@@ -582,6 +582,28 @@
                 padding: 0 1rem;
             }
         }
+
+        /* Portrait fixes: image fully visible 1:1, text defines card height */
+        @media (orientation: portrait) {
+            .project-card {
+                aspect-ratio: unset;
+            }
+
+            .card-inner {
+                height: auto;
+            }
+
+            .card-media {
+                flex: unset;
+                width: 100%;
+                aspect-ratio: 1 / 1;
+            }
+
+            .card-content {
+                flex: unset;
+                height: auto;
+            }
+        }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
