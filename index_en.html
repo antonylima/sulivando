@@ -40,10 +40,10 @@
                 submitBtn.disabled = true;
 
                 const templateParams = {
-                    user_name: userName,
-                    user_email: userEmail,
+                    name: userName,
+                    email: userEmail,
                     message: message,
-                    to_email: 'sulivando.yahoo.com.br'
+                    //to_email: 'sulivando.yahoo.com.br'
                 };
 
                 emailjs.send('service_lac7jva', 'template_zkikphc', templateParams)
@@ -388,7 +388,8 @@
         @media (orientation: landscape) {
             .card-media img {
                 object-fit: contain;
-                background: #000; /* letterbox color if extra space */
+                background: #000;
+                /* letterbox color if extra space */
             }
         }
 
@@ -530,24 +531,29 @@
         .card-content {
             display: flex;
             flex-direction: column;
-            justify-content: center; /* center the text block vertically in the card */
+            justify-content: center;
+            /* center the text block vertically in the card */
             flex: 1;
             padding: 0.75rem;
             gap: 0.3rem;
-            text-align: center; /* center text horizontally */
+            text-align: center;
+            /* center text horizontally */
         }
 
         .card-content h3 {
-            font-size: 1.25rem; /* match section headers */
+            font-size: 1.25rem;
+            /* match section headers */
             font-weight: 600;
             margin: 0 0 0.15rem;
         }
 
         .card-desc {
-            font-size: 0.875rem; /* standard body size */
+            font-size: 0.875rem;
+            /* standard body size */
             color: #d1d5db;
             margin: 0 0 0.3rem;
-            text-align: left; /* align description to left */
+            text-align: left;
+            /* align description to left */
         }
 
         .card-tags {
@@ -560,7 +566,8 @@
             padding: 0.1rem 0.4rem;
             background: #374151;
             border-radius: 4px;
-            font-size: 0.75rem; /* readable tag size */
+            font-size: 0.75rem;
+            /* readable tag size */
             color: #f3f4f6;
         }
 
@@ -694,7 +701,8 @@
                 <div>
                     <h3 class="text-2xl font-semibold mb-4">Systems Analyst</h3>
                     <p class="text-gray-300 mb-6">
-                        I'm Sulivando — a Full Stack developer focused on web apps and automated solutions. I combine design sense
+                        I'm Sulivando — a Full Stack developer focused on web apps and automated solutions. I combine
+                        design sense
                         with engineering to ship polished products.
                     </p>
                     <p class="text-gray-300 mb-6">
@@ -857,7 +865,11 @@
                                     </div>
                                     <div class="card-content">
                                         <h3>Somnacity</h3>
-                                        <p class="card-desc">O Somnacity é uma plataforma digital que centraliza a agenda de música ao vivo em bares e espaços de entretenimento de Fortaleza. O projeto funciona como um agregador inteligente que automatiza a coleta de informações, organiza os dados com apoio de IA e oferece ao usuário uma forma simples e rápida de descobrir onde está tocando na cidade.</p>
+                                        <p class="card-desc">O Somnacity é uma plataforma digital que centraliza a
+                                            agenda de música ao vivo em bares e espaços de entretenimento de Fortaleza.
+                                            O projeto funciona como um agregador inteligente que automatiza a coleta de
+                                            informações, organiza os dados com apoio de IA e oferece ao usuário uma
+                                            forma simples e rápida de descobrir onde está tocando na cidade.</p>
                                         <div class="card-tags">
                                             <span class="card-tag">PHP</span>
                                             <span class="card-tag">MySQL</span>
@@ -866,10 +878,10 @@
                                         </div>
                                         <div class="card-links">
                                             <a href="http://somnacity.com.br" title="Live demo
-                                                class="accent" target="_blank" rel="noopener noreferrer"><i
+                                                class=" accent" target="_blank" rel="noopener noreferrer"><i
                                                     class="fas fa-external-link-alt"></i> Live Demo</a>
-                                            <a href="#" title="Source code" class="accent"
-                                                target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i>
+                                            <a href="#" title="Source code" class="accent" target="_blank"
+                                                rel="noopener noreferrer"><i class="fab fa-github"></i>
                                                 Code</a>
                                         </div>
                                     </div>
@@ -882,23 +894,26 @@
                                 tabindex="0" aria-label="Nostaplay">
                                 <div class="card-inner">
                                     <div class="card-media">
-                                        <img src="assets/nosta.png" alt="Nostaplay"
-                                            class="card-img">
+                                        <img src="assets/nosta.png" alt="Nostaplay" class="card-img">
                                         <div class="card-overlay"></div>
                                     </div>
                                     <div class="card-content">
                                         <h3>Nostaplay</h3>
-                                        <p class="card-desc">Plataforma de áudio web com identidade inspirada na nostalgia digital, combinando design minimalista e interface direta. O projeto explora simplicidade intencional, onde o visual reduzido e o nome refletem a proposta central: abrir, dar play e ouvir, oferecendo uma experiência de áudio que é ao mesmo tempo moderna e evocativa de memórias passadas.</p>
+                                        <p class="card-desc">Plataforma de áudio web com identidade inspirada na
+                                            nostalgia digital, combinando design minimalista e interface direta. O
+                                            projeto explora simplicidade intencional, onde o visual reduzido e o nome
+                                            refletem a proposta central: abrir, dar play e ouvir, oferecendo uma
+                                            experiência de áudio que é ao mesmo tempo moderna e evocativa de memórias
+                                            passadas.</p>
                                         <div class="card-tags">
                                             <span class="card-tag">JavaScript</span>
                                             <span class="card-tag">PHP</span>
                                         </div>
                                         <div class="card-links">
-                                            <a href="https://nostaplay.com/" title="Live demo"
-                                                class="accent" target="_blank" rel="noopener noreferrer"><i
+                                            <a href="https://nostaplay.com/" title="Live demo" class="accent"
+                                                target="_blank" rel="noopener noreferrer"><i
                                                     class="fas fa-external-link-alt"></i> Live Demo</a>
-                                            <a href="#"
-                                                title="Source code" class="accent" target="_blank"
+                                            <a href="#" title="Source code" class="accent" target="_blank"
                                                 rel="noopener noreferrer"><i class="fab fa-github"></i> Code</a>
                                         </div>
                                     </div>
@@ -911,13 +926,17 @@
                                 tabindex="0" aria-label="Self-Hosted">
                                 <div class="card-inner">
                                     <div class="card-media">
-                                        <img src="assets/shs.jpg" alt="Self-Hosted Service" 
-                                            class="card-img">
+                                        <img src="assets/shs.jpg" alt="Self-Hosted Service" class="card-img">
                                         <div class="card-overlay"></div>
                                     </div>
                                     <div class="card-content">
                                         <h3>Self-Hosted Service</h3>
-                                        <p class="card-desc">Projeto experimental que explora uma arquitetura alternativa de infraestrutura, na qual um smartphone Android é utilizado como plataforma para execução e exposição de serviços web completos. A proposta demonstra como um dispositivo móvel pode operar como um ambiente de hospedagem funcional, capaz de executar aplicações e disponibilizá-las publicamente</p>
+                                        <p class="card-desc">Projeto experimental que explora uma arquitetura
+                                            alternativa de infraestrutura, na qual um smartphone Android é utilizado
+                                            como plataforma para execução e exposição de serviços web completos. A
+                                            proposta demonstra como um dispositivo móvel pode operar como um ambiente de
+                                            hospedagem funcional, capaz de executar aplicações e disponibilizá-las
+                                            publicamente</p>
                                         <div class="card-tags">
                                             <span class="card-tag">Termux</span>
                                             <span class="card-tag">Proot</span>
@@ -926,12 +945,11 @@
                                             <span class="card-tag">Cloudflare</span>
                                         </div>
                                         <div class="card-links">
-                                            <a href="https://nostaplay.com"
-                                                title="Live demo" class="accent" target="_blank"
-                                                rel="noopener noreferrer"><i class="fas fa-external-link-alt"></i> Live
+                                            <a href="https://nostaplay.com" title="Live demo" class="accent"
+                                                target="_blank" rel="noopener noreferrer"><i
+                                                    class="fas fa-external-link-alt"></i> Live
                                                 Demo</a>
-                                            <a href="#"
-                                                title="Source code" class="accent" target="_blank"
+                                            <a href="#" title="Source code" class="accent" target="_blank"
                                                 rel="noopener noreferrer"><i class="fab fa-github"></i> Code</a>
                                         </div>
                                     </div>
@@ -944,24 +962,27 @@
                                 tabindex="0" aria-label="Personal Page">
                                 <div class="card-inner">
                                     <div class="card-media">
-                                        <img src="assets/personal.png" alt="Personal Page"
-                                            class="card-img">
+                                        <img src="assets/personal.png" alt="Personal Page" class="card-img">
                                         <div class="card-overlay"></div>
                                     </div>
                                     <div class="card-content">
                                         <h3>Personal Page</h3>
-                                        <p class="card-desc">Site pessoal desenvolvido com foco em apresentar trabalhos, ideias e motivações profissionais de forma clara e objetiva. O projeto prioriza simplicidade, organização de conteúdo e uma experiência direta. Criado em 2023, funciona como um ponto central para reunir informações profissionais e facilitar conexões. Simples, mas com propósito e clareza.</p>
+                                        <p class="card-desc">Site pessoal desenvolvido com foco em apresentar trabalhos,
+                                            ideias e motivações profissionais de forma clara e objetiva. O projeto
+                                            prioriza simplicidade, organização de conteúdo e uma experiência direta.
+                                            Criado em 2023, funciona como um ponto central para reunir informações
+                                            profissionais e facilitar conexões. Simples, mas com propósito e clareza.
+                                        </p>
                                         <div class="card-tags">
                                             <span class="card-tag">JavaScript</span>
                                             <span class="card-tag">PHP</span>
                                         </div>
                                         <div class="card-links">
-                                            <a href="https://sulivando.kesug.com"
-                                                title="Live demo" class="accent" target="_blank"
-                                                rel="noopener noreferrer"><i class="fas fa-external-link-alt"></i> Live
+                                            <a href="https://sulivando.kesug.com" title="Live demo" class="accent"
+                                                target="_blank" rel="noopener noreferrer"><i
+                                                    class="fas fa-external-link-alt"></i> Live
                                                 Demo</a>
-                                            <a href="#"
-                                                title="Source code" class="accent" target="_blank"
+                                            <a href="#" title="Source code" class="accent" target="_blank"
                                                 rel="noopener noreferrer"><i class="fab fa-github"></i> Code</a>
                                         </div>
                                     </div>
@@ -1071,7 +1092,7 @@
 
     <script>
         // Typing Effect
-        const texts = ['Systems Analyst','Full Stack Developer', 'Android Developer', 'Automation Engineer','DevOps Engineer', 'Tech Enthusiast'];
+        const texts = ['Systems Analyst', 'Full Stack Developer', 'Android Developer', 'Automation Engineer', 'DevOps Engineer', 'Tech Enthusiast'];
         let textIndex = 0;
         let charIndex = 0;
         let isDeleting = false;

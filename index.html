@@ -40,10 +40,10 @@
                 submitBtn.disabled = true;
 
                 const templateParams = {
-                    user_name: userName,
-                    user_email: userEmail,
+                    name: userName,
+                    email: userEmail,
                     message: message,
-                    to_email: 'sulivando.yahoo.com.br'
+                    //reply_to: userEmail
                 };
 
                 emailjs.send('service_lac7jva', 'template_zkikphc', templateParams)
