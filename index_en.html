@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sulivando - Desenvolvedor Full Stack</title>
+    <title>Sulivando - Full Stack Developer</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script type="module">
@@ -29,14 +29,14 @@
 
                 // Validate form fields
                 if (!userName || !userEmail || !message) {
-                    alert(typeof t === 'function' ? t('msg_fill_fields') : 'Por favor, preencha todos os campos');
+                    alert('Please fill in all fields');
                     return;
                 }
 
                 // Show loading state
                 const submitBtn = formElement.querySelector('button[type="submit"]');
                 const originalText = submitBtn.textContent;
-                submitBtn.textContent = typeof t === 'function' ? t('msg_sending') : 'Enviando...';
+                submitBtn.textContent = 'Sending...';
                 submitBtn.disabled = true;
 
                 const templateParams = {
@@ -53,7 +53,7 @@
                         // Create success message
                         const successMessage = document.createElement('div');
                         successMessage.className = 'fixed top-20 right-6 bg-green-600 text-white px-6 py-3 rounded-lg shadow-lg transform translate-x-full transition-transform z-50';
-                        successMessage.textContent = typeof t === 'function' ? t('msg_success') : 'Mensagem enviada com sucesso!';
+                        successMessage.textContent = 'Message sent successfully!';
                         document.body.appendChild(successMessage);
 
                         // Animate in
@@ -79,7 +79,7 @@
                         // Create error message
                         const errorMessage = document.createElement('div');
                         errorMessage.className = 'fixed top-20 right-6 bg-red-600 text-white px-6 py-3 rounded-lg shadow-lg transform translate-x-full transition-transform z-50';
-                        errorMessage.textContent = typeof t === 'function' ? t('msg_error') : 'Falha ao enviar mensagem. Tente novamente.';
+                        errorMessage.textContent = 'Failed to send message. Please try again.';
                         document.body.appendChild(errorMessage);
 
                         // Animate in
@@ -388,8 +388,7 @@
         @media (orientation: landscape) {
             .card-media img {
                 object-fit: contain;
-                background: #000;
-                /* letterbox color if extra space */
+                background: #000; /* letterbox color if extra space */
             }
         }
 
@@ -531,29 +530,24 @@
         .card-content {
             display: flex;
             flex-direction: column;
-            justify-content: center;
-            /* center the text block vertically in the card */
+            justify-content: center; /* center the text block vertically in the card */
             flex: 1;
             padding: 0.75rem;
             gap: 0.3rem;
-            text-align: center;
-            /* center text horizontally */
+            text-align: center; /* center text horizontally */
         }
 
         .card-content h3 {
-            font-size: 1.25rem;
-            /* match section headers */
+            font-size: 1.25rem; /* match section headers */
             font-weight: 600;
             margin: 0 0 0.15rem;
         }
 
         .card-desc {
-            font-size: 0.875rem;
-            /* standard body size */
+            font-size: 0.875rem; /* standard body size */
             color: #d1d5db;
             margin: 0 0 0.3rem;
-            text-align: left;
-            /* align description to left */
+            text-align: left; /* align description to left */
         }
 
         .card-tags {
@@ -566,8 +560,7 @@
             padding: 0.1rem 0.4rem;
             background: #374151;
             border-radius: 4px;
-            font-size: 0.75rem;
-            /* readable tag size */
+            font-size: 0.75rem; /* readable tag size */
             color: #f3f4f6;
         }
 
@@ -611,45 +604,6 @@
                 height: auto;
             }
         }
-
-        /* ── Language Toggle ── */
-        .lang-toggle {
-            display: inline-flex;
-            align-items: center;
-            gap: 0;
-            background: rgba(255, 255, 255, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            border-radius: 999px;
-            padding: 3px;
-            cursor: pointer;
-            user-select: none;
-            transition: box-shadow 300ms ease;
-            flex-shrink: 0;
-        }
-
-        .lang-toggle:hover {
-            box-shadow: 0 0 16px var(--accent-ring);
-        }
-
-        .lang-toggle span {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 4px 10px;
-            border-radius: 999px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            letter-spacing: 0.5px;
-            color: rgba(255, 255, 255, 0.45);
-            transition: all 280ms cubic-bezier(.2, .9, .2, 1);
-            line-height: 1;
-        }
-
-        .lang-toggle span.active {
-            background: var(--accent);
-            color: #fff;
-            box-shadow: 0 2px 10px var(--accent-ring);
-        }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
@@ -659,39 +613,28 @@
     <nav class="fixed top-0 w-full glass-effect z-50 px-6 py-4">
         <div class="max-w-7xl mx-auto flex justify-between items-center">
             <div class="text-2xl font-bold accent">S</div>
-            <div class="hidden md:flex space-x-8 items-center">
-                <a href="#home" class="nav-link" data-i18n="nav_home">Início</a>
-                <a href="#about" class="nav-link" data-i18n="nav_about">Sobre</a>
-                <a href="#skills" class="nav-link" data-i18n="nav_skills">Habilidades</a>
-                <a href="#projects" class="nav-link" data-i18n="nav_projects">Projetos</a>
-                <a href="#contact" class="nav-link" data-i18n="nav_contact">Contato</a>
-                <div class="lang-toggle" onclick="toggleLanguage()" role="button" aria-label="Toggle language"
-                    tabindex="0">
-                    <span class="lang-pt active">PT</span>
-                    <span class="lang-en">EN</span>
-                </div>
+            <div class="hidden md:flex space-x-8">
+                <a href="#home" class="nav-link">Home</a>
+                <a href="#about" class="nav-link">About</a>
+                <a href="#skills" class="nav-link">Skills</a>
+                <a href="#projects" class="nav-link">Projects</a>
+                <a href="#contact" class="nav-link">Contact</a>
             </div>
-            <div class="flex items-center gap-3 md:hidden">
-                <div class="lang-toggle" onclick="toggleLanguage()" role="button" aria-label="Toggle language"
-                    tabindex="0">
-                    <span class="lang-pt active">PT</span>
-                    <span class="lang-en">EN</span>
-                </div>
-                <button id="mobile-menu-btn" aria-controls="mobile-menu" aria-expanded="false" aria-label="Abrir menu">
-                    <i class="fas fa-bars text-2xl"></i>
-                </button>
-            </div>
+            <button id="mobile-menu-btn" class="md:hidden" aria-controls="mobile-menu" aria-expanded="false"
+                aria-label="Open menu">
+                <i class="fas fa-bars text-2xl"></i>
+            </button>
         </div>
     </nav>
 
     <!-- Mobile Menu -->
     <div id="mobile-menu" class="fixed inset-0 bg-gray-900 z-40 hidden">
         <div class="flex flex-col items-center justify-center h-full space-y-8 text-2xl">
-            <a href="#home" class="mobile-nav-link" data-i18n="nav_home">Início</a>
-            <a href="#about" class="mobile-nav-link" data-i18n="nav_about">Sobre</a>
-            <a href="#skills" class="mobile-nav-link" data-i18n="nav_skills">Habilidades</a>
-            <a href="#projects" class="mobile-nav-link" data-i18n="nav_projects">Projetos</a>
-            <a href="#contact" class="mobile-nav-link" data-i18n="nav_contact">Contato</a>
+            <a href="#home" class="mobile-nav-link">Home</a>
+            <a href="#about" class="mobile-nav-link">About</a>
+            <a href="#skills" class="mobile-nav-link">Skills</a>
+            <a href="#projects" class="mobile-nav-link">Projects</a>
+            <a href="#contact" class="mobile-nav-link">Contact</a>
         </div>
     </div>
 
@@ -707,25 +650,23 @@
 
         <div class="max-w-7xl mx-auto px-6 relative z-10">
             <div class="text-center">
-                <h1 class="text-5xl md:text-7xl font-bold mb-6 fade-in-up" data-animate data-i18n-html="hero_title">
-                    Olá, eu sou <span class="accent">Sulivando</span>
+                <h1 class="text-5xl md:text-7xl font-bold mb-6 fade-in-up" data-animate>
+                    Hi, I'm <span class="accent">Sulivando</span>
                 </h1>
                 <div class="text-2xl md:text-4xl mb-8 h-12 fade-in-up" data-animate>
                     <span id="typing-text" class="typing-cursor"></span>
                 </div>
-                <p class="text-xl text-gray-300 mb-12 max-w-2xl mx-auto" data-i18n="hero_desc">
-                    Construo sistemas eficientes e experiências digitais projetadas com cuidado.
+                <p class="text-xl text-gray-300 mb-12 max-w-2xl mx-auto">
+                    I build efficient systems and digital experiences thoughtfully designed.
                 </p>
                 <div class="flex flex-col sm:flex-row gap-4 justify-center">
                     <a href="#projects"
-                        class="px-8 py-4 btn-subtle rounded-full font-semibold hover:scale-105 transition-transform"
-                        data-i18n="hero_cta_work">
-                        Ver Meus Trabalhos
+                        class="px-8 py-4 btn-subtle rounded-full font-semibold hover:scale-105 transition-transform">
+                        View My Work
                     </a>
                     <a href="#contact"
-                        class="px-8 py-4 glass-effect rounded-full font-semibold hover:scale-105 transition-transform"
-                        data-i18n="hero_cta_contact">
-                        Entre em Contato
+                        class="px-8 py-4 glass-effect rounded-full font-semibold hover:scale-105 transition-transform">
+                        Get In Touch
                     </a>
                 </div>
             </div>
@@ -739,8 +680,8 @@
     <!-- About Section -->
     <section id="about" class="py-20 px-6">
         <div class="max-w-7xl mx-auto">
-            <h2 class="text-4xl md:text-5xl font-bold text-center mb-16" data-i18n-html="about_title">
-                Sobre <span class="accent">Mim</span>
+            <h2 class="text-4xl md:text-5xl font-bold text-center mb-16">
+                About <span class="accent">Me</span>
             </h2>
 
             <div class="grid md:grid-cols-2 gap-12 items-center">
@@ -751,29 +692,28 @@
                 </div>
 
                 <div>
-                    <h3 class="text-2xl font-semibold mb-4" data-i18n="about_role">Analista de Sistemas</h3>
-                    <p class="text-gray-300 mb-6" data-i18n="about_p1">
-                        Sou Sulivando — desenvolvedor Full Stack focado em aplicações web e soluções automatizadas.
-                        Combino senso de design
-                        com engenharia para entregar produtos bem acabados.
+                    <h3 class="text-2xl font-semibold mb-4">Systems Analyst</h3>
+                    <p class="text-gray-300 mb-6">
+                        I'm Sulivando — a Full Stack developer focused on web apps and automated solutions. I combine design sense
+                        with engineering to ship polished products.
                     </p>
-                    <p class="text-gray-300 mb-6" data-i18n="about_p2">
-                        Acredito que a tecnologia pode transformar experiências. Gosto de construir aplicações
-                        performáticas, bem projetadas e contribuir com código aberto.
+                    <p class="text-gray-300 mb-6">
+                        I believe technology can transform experiences. I enjoy building performant, well-designed
+                        applications and contributing to open source.
                     </p>
 
                     <div class="grid grid-cols-3 gap-4 text-center">
                         <div class="glass-effect p-4 rounded-lg">
                             <div class="text-3xl font-bold accent fade-in-up" data-animate>10+</div>
-                            <div class="text-sm text-gray-400" data-i18n="about_stat_projects">Projetos</div>
+                            <div class="text-sm text-gray-400">Projects</div>
                         </div>
                         <div class="glass-effect p-4 rounded-lg">
                             <div class="text-3xl font-bold accent fade-in-up" data-animate>20+</div>
-                            <div class="text-sm text-gray-400" data-i18n="about_stat_years">Anos Exp</div>
+                            <div class="text-sm text-gray-400">Years Exp</div>
                         </div>
                         <div class="glass-effect p-4 rounded-lg">
                             <div class="text-3xl font-bold accent fade-in-up" data-animate>100%</div>
-                            <div class="text-sm text-gray-400" data-i18n="about_stat_dedicated">Dedicação</div>
+                            <div class="text-sm text-gray-400">Dedicated</div>
                         </div>
                     </div>
                 </div>
@@ -784,13 +724,13 @@
     <!-- Skills Section -->
     <section id="skills" class="py-20 px-6 bg-gray-800">
         <div class="max-w-7xl mx-auto">
-            <h2 class="text-4xl md:text-5xl font-bold text-center mb-16" data-i18n-html="skills_title">
-                Minhas <span class="accent">Habilidades</span>
+            <h2 class="text-4xl md:text-5xl font-bold text-center mb-16">
+                My <span class="accent">Skills</span>
             </h2>
 
             <div class="grid md:grid-cols-2 gap-12">
                 <div>
-                    <h3 class="text-2xl font-semibold mb-8" data-i18n="skills_technical">Habilidades Técnicas</h3>
+                    <h3 class="text-2xl font-semibold mb-8">Technical Skills</h3>
 
                     <div class="space-y-6">
                         <div class="animate-on-scroll" data-animate>
@@ -824,7 +764,7 @@
 
                         <div class="animate-on-scroll" data-animate>
                             <div class="flex justify-between mb-2">
-                                <span data-i18n="skills_database">Banco de Dados</span>
+                                <span>Database</span>
                                 <span>60%</span>
                             </div>
                             <div class="w-full bg-gray-700 rounded-full h-3">
@@ -835,8 +775,7 @@
                 </div>
 
                 <div>
-                    <h3 class="text-2xl font-semibold mb-8" data-i18n-html="skills_tools">Tecnologias &amp; Ferramentas
-                    </h3>
+                    <h3 class="text-2xl font-semibold mb-8">Technologies & Tools</h3>
 
                     <div class="grid grid-cols-4 gap-6">
                         <div class="tech-icon text-center">
@@ -896,13 +835,13 @@
     <!-- Projects Section -->
     <section id="projects" class="py-20 px-6">
         <div class="max-w-7xl mx-auto">
-            <h2 class="text-4xl md:text-5xl font-bold text-center mb-16" data-i18n-html="projects_title">
-                Projetos em <span class="accent">Destaque</span>
+            <h2 class="text-4xl md:text-5xl font-bold text-center mb-16">
+                Featured <span class="accent">Projects</span>
             </h2>
 
             <div class="projects-carousel">
                 <div class="carousel-controls carousel-prev">
-                    <button class="carousel-button carousel-prev-btn" aria-label="Projeto anterior"> <i
+                    <button class="carousel-button carousel-prev-btn" aria-label="Previous project"> <i
                             class="fas fa-chevron-left"></i> </button>
                 </div>
                 <div class="carousel-viewport">
@@ -910,7 +849,7 @@
                         <!-- Slide 1 -->
                         <div class="carousel-slide">
                             <div class="project-card glass-effect rounded-lg overflow-hidden focus-visible-ring"
-                                tabindex="0" aria-label="Abrir projeto: Somnacity">
+                                tabindex="0" aria-label="Open project: Somnacity">
                                 <div class="card-inner">
                                     <div class="card-media">
                                         <img src="assets/snccover.png" alt="Somnacity" class="card-img">
@@ -918,12 +857,7 @@
                                     </div>
                                     <div class="card-content">
                                         <h3>Somnacity</h3>
-                                        <p class="card-desc" data-i18n="project1_desc">O Somnacity é uma plataforma
-                                            digital que centraliza a
-                                            agenda de música ao vivo em bares e espaços de entretenimento de Fortaleza.
-                                            O projeto funciona como um agregador inteligente que automatiza a coleta de
-                                            informações, organiza os dados com apoio de IA e oferece ao usuário uma
-                                            forma simples e rápida de descobrir onde está tocando na cidade.</p>
+                                        <p class="card-desc">O Somnacity é uma plataforma digital que centraliza a agenda de música ao vivo em bares e espaços de entretenimento de Fortaleza. O projeto funciona como um agregador inteligente que automatiza a coleta de informações, organiza os dados com apoio de IA e oferece ao usuário uma forma simples e rápida de descobrir onde está tocando na cidade.</p>
                                         <div class="card-tags">
                                             <span class="card-tag">PHP</span>
                                             <span class="card-tag">MySQL</span>
@@ -931,12 +865,12 @@
                                             <span class="card-tag">LLM</span>
                                         </div>
                                         <div class="card-links">
-                                            <a href="http://somnacity.com.br" title="Demo ao vivo" class="accent"
-                                                target="_blank" rel="noopener noreferrer"><i
-                                                    class="fas fa-external-link-alt"></i> Demo</a>
-                                            <a href="#" title="Código fonte" class="accent" target="_blank"
-                                                rel="noopener noreferrer"><i class="fab fa-github"></i>
-                                                Código</a>
+                                            <a href="http://somnacity.com.br" title="Live demo
+                                                class="accent" target="_blank" rel="noopener noreferrer"><i
+                                                    class="fas fa-external-link-alt"></i> Live Demo</a>
+                                            <a href="#" title="Source code" class="accent"
+                                                target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i>
+                                                Code</a>
                                         </div>
                                     </div>
                                 </div>
@@ -948,28 +882,24 @@
                                 tabindex="0" aria-label="Nostaplay">
                                 <div class="card-inner">
                                     <div class="card-media">
-                                        <img src="assets/nosta.png" alt="Nostaplay" class="card-img">
+                                        <img src="assets/nosta.png" alt="Nostaplay"
+                                            class="card-img">
                                         <div class="card-overlay"></div>
                                     </div>
                                     <div class="card-content">
                                         <h3>Nostaplay</h3>
-                                        <p class="card-desc" data-i18n="project2_desc">Plataforma de áudio web com
-                                            identidade inspirada na
-                                            nostalgia digital, combinando design minimalista e interface direta. O
-                                            projeto explora simplicidade intencional, onde o visual reduzido e o nome
-                                            refletem a proposta central: abrir, dar play e ouvir, oferecendo uma
-                                            experiência de áudio que é ao mesmo tempo moderna e evocativa de memórias
-                                            passadas.</p>
+                                        <p class="card-desc">Plataforma de áudio web com identidade inspirada na nostalgia digital, combinando design minimalista e interface direta. O projeto explora simplicidade intencional, onde o visual reduzido e o nome refletem a proposta central: abrir, dar play e ouvir, oferecendo uma experiência de áudio que é ao mesmo tempo moderna e evocativa de memórias passadas.</p>
                                         <div class="card-tags">
                                             <span class="card-tag">JavaScript</span>
                                             <span class="card-tag">PHP</span>
                                         </div>
                                         <div class="card-links">
-                                            <a href="https://nostaplay.com/" title="Demo ao vivo" class="accent"
-                                                target="_blank" rel="noopener noreferrer"><i
-                                                    class="fas fa-external-link-alt"></i> Demo</a>
-                                            <a href="#" title="Código fonte" class="accent" target="_blank"
-                                                rel="noopener noreferrer"><i class="fab fa-github"></i> Código</a>
+                                            <a href="https://nostaplay.com/" title="Live demo"
+                                                class="accent" target="_blank" rel="noopener noreferrer"><i
+                                                    class="fas fa-external-link-alt"></i> Live Demo</a>
+                                            <a href="#"
+                                                title="Source code" class="accent" target="_blank"
+                                                rel="noopener noreferrer"><i class="fab fa-github"></i> Code</a>
                                         </div>
                                     </div>
                                 </div>
@@ -981,18 +911,13 @@
                                 tabindex="0" aria-label="Self-Hosted">
                                 <div class="card-inner">
                                     <div class="card-media">
-                                        <img src="assets/shs.jpg" alt="Self-Hosted Service" class="card-img">
+                                        <img src="assets/shs.jpg" alt="Self-Hosted Service" 
+                                            class="card-img">
                                         <div class="card-overlay"></div>
                                     </div>
                                     <div class="card-content">
-                                        <h3 data-i18n="project3_title">Serviço Auto-Hospedado</h3>
-                                        <p class="card-desc" data-i18n="project3_desc">Projeto experimental que explora
-                                            uma arquitetura
-                                            alternativa de infraestrutura, na qual um smartphone Android é utilizado
-                                            como plataforma para execução e exposição de serviços web completos. A
-                                            proposta demonstra como um dispositivo móvel pode operar como um ambiente de
-                                            hospedagem funcional, capaz de executar aplicações e disponibilizá-las
-                                            publicamente</p>
+                                        <h3>Self-Hosted Service</h3>
+                                        <p class="card-desc">Projeto experimental que explora uma arquitetura alternativa de infraestrutura, na qual um smartphone Android é utilizado como plataforma para execução e exposição de serviços web completos. A proposta demonstra como um dispositivo móvel pode operar como um ambiente de hospedagem funcional, capaz de executar aplicações e disponibilizá-las publicamente</p>
                                         <div class="card-tags">
                                             <span class="card-tag">Termux</span>
                                             <span class="card-tag">Proot</span>
@@ -1001,12 +926,13 @@
                                             <span class="card-tag">Cloudflare</span>
                                         </div>
                                         <div class="card-links">
-                                            <a href="https://nostaplay.com" title="Demo ao vivo" class="accent"
-                                                target="_blank" rel="noopener noreferrer"><i
-                                                    class="fas fa-external-link-alt"></i>
+                                            <a href="https://nostaplay.com"
+                                                title="Live demo" class="accent" target="_blank"
+                                                rel="noopener noreferrer"><i class="fas fa-external-link-alt"></i> Live
                                                 Demo</a>
-                                            <a href="#" title="Código fonte" class="accent" target="_blank"
-                                                rel="noopener noreferrer"><i class="fab fa-github"></i> Código</a>
+                                            <a href="#"
+                                                title="Source code" class="accent" target="_blank"
+                                                rel="noopener noreferrer"><i class="fab fa-github"></i> Code</a>
                                         </div>
                                     </div>
                                 </div>
@@ -1015,32 +941,28 @@
                         <!-- Slide 4 -->
                         <div class="carousel-slide">
                             <div class="project-card glass-effect rounded-lg overflow-hidden focus-visible-ring"
-                                tabindex="0" aria-label="Página Pessoal">
+                                tabindex="0" aria-label="Personal Page">
                                 <div class="card-inner">
                                     <div class="card-media">
-                                        <img src="assets/personal.png" alt="Página Pessoal" class="card-img">
+                                        <img src="assets/personal.png" alt="Personal Page"
+                                            class="card-img">
                                         <div class="card-overlay"></div>
                                     </div>
                                     <div class="card-content">
-                                        <h3 data-i18n="project4_title">Página Pessoal</h3>
-                                        <p class="card-desc" data-i18n="project4_desc">Site pessoal desenvolvido com
-                                            foco em apresentar trabalhos,
-                                            ideias e motivações profissionais de forma clara e objetiva. O projeto
-                                            prioriza simplicidade, organização de conteúdo e uma experiência direta.
-                                            Criado em 2023, funciona como um ponto central para reunir informações
-                                            profissionais e facilitar conexões. Simples, mas com propósito e clareza.
-                                        </p>
+                                        <h3>Personal Page</h3>
+                                        <p class="card-desc">Site pessoal desenvolvido com foco em apresentar trabalhos, ideias e motivações profissionais de forma clara e objetiva. O projeto prioriza simplicidade, organização de conteúdo e uma experiência direta. Criado em 2023, funciona como um ponto central para reunir informações profissionais e facilitar conexões. Simples, mas com propósito e clareza.</p>
                                         <div class="card-tags">
                                             <span class="card-tag">JavaScript</span>
                                             <span class="card-tag">PHP</span>
                                         </div>
                                         <div class="card-links">
-                                            <a href="https://sulivando.kesug.com" title="Demo ao vivo" class="accent"
-                                                target="_blank" rel="noopener noreferrer"><i
-                                                    class="fas fa-external-link-alt"></i>
+                                            <a href="https://sulivando.kesug.com"
+                                                title="Live demo" class="accent" target="_blank"
+                                                rel="noopener noreferrer"><i class="fas fa-external-link-alt"></i> Live
                                                 Demo</a>
-                                            <a href="#" title="Código fonte" class="accent" target="_blank"
-                                                rel="noopener noreferrer"><i class="fab fa-github"></i> Código</a>
+                                            <a href="#"
+                                                title="Source code" class="accent" target="_blank"
+                                                rel="noopener noreferrer"><i class="fab fa-github"></i> Code</a>
                                         </div>
                                     </div>
                                 </div>
@@ -1049,19 +971,18 @@
                     </div>
                 </div>
                 <div class="carousel-controls carousel-next">
-                    <button class="carousel-button carousel-next-btn" aria-label="Próximo projeto"> <i
+                    <button class="carousel-button carousel-next-btn" aria-label="Next project"> <i
                             class="fas fa-chevron-right"></i> </button>
                 </div>
                 <div class="flex justify-center mt-6 items-center">
-                    <div class="carousel-dots" role="tablist" aria-label="Paginação de projetos"></div>
+                    <div class="carousel-dots" role="tablist" aria-label="Project pagination"></div>
                 </div>
             </div>
 
             <div class="text-center mt-12">
-                <a href="https://sulivandev.netlify.app" title="Todos os projetos"
-                    class="inline-flex items-center gap-2 accent hover:text-yellow-400"
-                    data-i18n-html="projects_view_all">
-                    Ver Todos os Projetos <i class="fas fa-arrow-right"></i>
+                <a href="https://sulivandev.netlify.app" title="All projects"
+                    class="inline-flex items-center gap-2 accent hover:text-yellow-400">
+                    View All Projects <i class="fas fa-arrow-right"></i>
                 </a>
             </div>
         </div>
@@ -1070,16 +991,16 @@
     <!-- Contact Section -->
     <section id="contact" class="py-20 px-6 bg-gray-800">
         <div class="max-w-4xl mx-auto">
-            <h2 class="text-4xl md:text-5xl font-bold text-center mb-16" data-i18n-html="contact_title">
-                Entre em <span class="accent">Contato</span>
+            <h2 class="text-4xl md:text-5xl font-bold text-center mb-16">
+                Get In <span class="accent">Touch</span>
             </h2>
 
             <div class="grid md:grid-cols-2 gap-12">
                 <div>
-                    <h3 class="text-2xl font-semibold mb-6" data-i18n="contact_subtitle">Vamos Conversar</h3>
-                    <p class="text-gray-300 mb-8" data-i18n="contact_desc">
-                        Estou sempre interessado em conhecer novos projetos e oportunidades.
-                        Se você tem uma pergunta ou só quer dizer olá, fique à vontade para entrar em contato!
+                    <h3 class="text-2xl font-semibold mb-6">Let's Connect</h3>
+                    <p class="text-gray-300 mb-8">
+                        I'm always interested in hearing about new projects and opportunities.
+                        Whether you have a question or just want to say hi, feel free to reach out!
                     </p>
 
                     <div class="space-y-4">
@@ -1119,27 +1040,23 @@
                 <div>
                     <form id="contact-form" class="space-y-6">
                         <div>
-                            <input type="text" id="user_name" placeholder="Seu Nome"
-                                data-i18n-placeholder="contact_name_ph"
+                            <input type="text" id="user_name" placeholder="Your Name"
                                 class="w-full px-4 py-3 bg-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500"
                                 required>
                         </div>
                         <div>
-                            <input type="email" id="user_email" placeholder="Seu E-mail"
-                                data-i18n-placeholder="contact_email_ph"
+                            <input type="email" id="user_email" placeholder="Your Email"
                                 class="w-full px-4 py-3 bg-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500"
                                 required>
                         </div>
                         <div>
-                            <textarea id="message" placeholder="Sua Mensagem" rows="5"
-                                data-i18n-placeholder="contact_msg_ph"
+                            <textarea id="message" placeholder="Your Message" rows="5"
                                 class="w-full px-4 py-3 bg-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500"
                                 required></textarea>
                         </div>
                         <button type="submit"
-                            class="w-full py-3 btn-subtle rounded-lg font-semibold hover:scale-105 transition-transform"
-                            data-i18n="contact_submit">
-                            Enviar Mensagem
+                            class="w-full py-3 btn-subtle rounded-lg font-semibold hover:scale-105 transition-transform">
+                            Send Message
                         </button>
                     </form>
                 </div>
@@ -1149,15 +1066,12 @@
 
     <!-- Footer -->
     <footer class="py-8 px-6 text-center text-gray-400">
-        <p data-i18n-html="footer_text">&copy; 2025 Sulivando. Todos os direitos reservados. Feito com <i
-                class="fas fa-heart accent"></i> e código.
-        </p>
+        <p>&copy; 2025 Sulivando. All rights reserved. Built with <i class="fas fa-heart accent"></i> and code.</p>
     </footer>
 
-    <script src="i18n.js"></script>
     <script>
         // Typing Effect
-        let texts = ['Analista de Sistemas', 'Desenvolvedor Full Stack', 'Desenvolvedor Android', 'Engenheiro de Automação', 'Engenheiro DevOps', 'Entusiasta de Tecnologia'];
+        const texts = ['Systems Analyst','Full Stack Developer', 'Android Developer', 'Automation Engineer','DevOps Engineer', 'Tech Enthusiast'];
         let textIndex = 0;
         let charIndex = 0;
         let isDeleting = false;
@@ -1192,16 +1106,6 @@
         }
 
         typeText();
-
-        // Allow i18n to update typing texts at runtime
-        window.updateTypingTexts = function (newTexts) {
-            texts = newTexts;
-            textIndex = 0;
-            charIndex = 0;
-            isDeleting = false;
-            const typingElement = document.getElementById('typing-text');
-            if (typingElement) typingElement.textContent = '';
-        };
 
         // Mobile Menu Toggle
         const mobileMenuBtn = document.getElementById('mobile-menu-btn');
@@ -1404,7 +1308,7 @@
                 slides.forEach((s, i) => {
                     const dot = document.createElement('button');
                     dot.className = 'carousel-dot';
-                    dot.setAttribute('aria-label', `Ir para projeto ${i + 1}`);
+                    dot.setAttribute('aria-label', `Go to project ${i + 1}`);
                     dot.setAttribute('role', 'tab');
                     dot.addEventListener('click', () => { goTo(i); resetAutoplay(); });
                     dotsContainer.appendChild(dot);
